@@ -21,12 +21,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.purpleAccent, Color.fromARGB(255, 88, 88, 88)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight),
-        ),
+        margin: const EdgeInsets.all(20),
         child: ListView.builder(
           itemCount: beverages.length,
           itemBuilder: (context, index) {

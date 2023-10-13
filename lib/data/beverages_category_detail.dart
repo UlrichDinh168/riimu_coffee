@@ -1,3 +1,3 @@
- import 'package:riimu_coffee/models/beverage_category_model.dart';
+//  import 'package:riimu_coffee/models/beverage_category_model.dart';
 
-final <List> BeverageCategory;
+// final <List> BeverageCategory;

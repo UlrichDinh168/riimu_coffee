@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riimu_coffee/models/beverage_model.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BeverageCard extends StatelessWidget {
   const BeverageCard({
@@ -37,97 +38,115 @@ class BeverageCard extends StatelessWidget {
       Category.heiniken: 'heiniken',
       Category.cider: 'cider',
     };
-    print(beverage.id);
-    return Card(
-      child: Column(
-        children: [
-          ListTile(
-            title: Text(beverage.title),
-            subtitle: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: beverage.types.map((type) {
-                return Text(type);
-              }).toList(),
-            ),
-            onTap: () {
-              showDetails();
-            },
-          ),
-          ...beverage.description.properties.map((entry) {
-            String descriptionText = '';
-            // double materialPercentage =
-            //     (entry.remain ?? 1 / (entry.total ?? 100));
-            // materialPercentage = materialPercentage.clamp(0.0,
-            //     100.0); // Ensure the percentage is within the valid range
-            // materialPercentage /= 100.0; // Convert to the 0.0 to 1.0 range
+    // print(beverage.id);
+    return Container(
+      padding: const EdgeInsets.only(
+          bottom: 16.0), // Adjust the bottom padding value as needed
+      child: Card(
+        color: Colors.red[100],
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                beverage.title,
+                style: GoogleFonts.rubik(
+                    fontSize: 25, fontWeight: FontWeight.w400),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: beverage.types.map((type) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 4.0),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2,
+                          horizontal:
+                              10), // Adjust the padding values as needed
+                      decoration: BoxDecoration(
+                        color: Colors.green[300], // Background color
+                        borderRadius: BorderRadius.circular(
+                            20.0), // Adjust the radius value as needed
+                      ),
+                      child: Text(
+                        type,
+                        style: const TextStyle(
+                            color: Colors
+                                .white), // Adjust the text style as needed
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 5),
+              ...beverage.description.properties.map((entry) {
+                String descriptionText = '';
+                double materialPercentage = clampAndNormalizePercentage(
+                    (entry.remain ?? 1) / (entry.total ?? 100));
 
-            // double barPercentage = entry.degree != null
-            //     ? (entry.degree ?? 1 / 100.0)
-            //     : materialPercentage;
+                double degreePercentage =
+                    clampAndNormalizePercentage((entry.degree ?? 1) / 100.0);
 
-            double materialPercentage = clampAndNormalizePercentage(
-                (entry.remain ?? 1) / (entry.total ?? 100));
+                String text = beverage.title != 'Cold beverages' ? 'for' : '';
 
-            double degreePercentage =
-                clampAndNormalizePercentage((entry.degree ?? 1) / 100.0);
-
-            // double barPercentage = entry.degree != null
-            //     ? clampAndNormalizePercentage(degreePercentage, 0.0, 100.0)
-            //     : clampAndNormalizePercentage(materialPercentage, 0.0, 100.0);
-
-            String text = beverage.title != 'Cold beverages' ? 'for' : '';
-
-            if (entry.total != null && entry.remain != null) {
-              descriptionText +=
-                  '${categoryMap[entry.category]} $text ${entry.remain} ${entry.desc}';
-            }
-            if (entry.total == null && entry.remain == null) {
-              descriptionText += '${entry.desc}';
-            }
-            if (entry.degree != null) {
-              descriptionText += '${entry.degree}';
-            }
-            return Row(
-              children: [
-                // Text(entry.name),
-                Icon(categoryIcons[entry.category]),
-                if (entry.total != null && entry.remain != null ||
-                    entry.degree != null)
-                  LinearPercentIndicator(
-                    width: 140.0,
-                    lineHeight: 5.0,
-                    barRadius: const Radius.circular(10),
-                    percent: entry.degree != null
-                        ? degreePercentage
-                        : materialPercentage,
-                    backgroundColor: Colors.black12,
-                    progressColor: Colors.red,
-                  ),
-
-                // ProgressBar(progress: entry.remain),
-
-                Text(descriptionText),
-              ],
-            );
-          }),
-          // const ProgressBar(),
-
-          const SizedBox(
-            height: 20,
-          ),
-          ...beverage.salespersons.map((sp) {
-            return Row(
-              children: [
-                Column(
+                if (entry.total != null && entry.remain != null) {
+                  descriptionText +=
+                      '${categoryMap[entry.category]} $text ${entry.remain} ${entry.desc}';
+                }
+                if (entry.total == null && entry.remain == null) {
+                  descriptionText += '${entry.desc}';
+                }
+                if (entry.degree != null) {
+                  descriptionText += '${entry.degree}';
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Icon(categoryIcons[entry.category]),
+                        ),
+                        if (entry.total != null && entry.remain != null ||
+                            entry.degree != null)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: LinearPercentIndicator(
+                              width: 100.0,
+                              lineHeight: 5.0,
+                              barRadius: const Radius.circular(10),
+                              percent: entry.degree != null
+                                  ? degreePercentage
+                                  : materialPercentage,
+                              backgroundColor: Colors.black26,
+                              progressColor: Colors.red,
+                            ),
+                          ),
+                        Text(descriptionText),
+                      ],
+                    ),
+                  ],
+                );
+              }),
+              const SizedBox(
+                height: 20,
+              ),
+              ...beverage.salespersons.map((sp) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(sp.name),
                     Text(sp.status),
                   ],
-                ),
-              ],
-            );
-          }),
-        ],
+                );
+              }),
+            ],
+          ),
+        ),
       ),
     );
   }

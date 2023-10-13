@@ -51,7 +51,7 @@ final List<Beverage> beverages = [
   ),
   Beverage(
     title: 'Tea',
-    types: ['white', 'black', 'oolong', 'white', 'yellow'],
+    types: ['White', 'Black', 'Oolong', 'White', 'Yellow'],
     salespersons: [
       Salesperson(name: 'Mirjan', status: 'Tea connoisseur'),
     ],
@@ -71,7 +71,7 @@ final List<Beverage> beverages = [
   ),
   Beverage(
     title: 'Cold beverages',
-    types: ['beer', 'cider', 'coke', 'sting'],
+    types: ['Beer', 'Cider', 'Coke', 'Sting'],
     salespersons: [
       Salesperson(name: 'Goran', status: 'Fulltime filler'),
       Salesperson(name: 'Ville', status: 'Creditcard man'),

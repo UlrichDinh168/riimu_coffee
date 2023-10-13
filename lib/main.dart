@@ -33,7 +33,17 @@ class _Start extends State<Start> {
     }
 
     return MaterialApp(
-      home: Scaffold(body: screenWidget),
+      home: Scaffold(
+        backgroundColor: Colors.red[50],
+        body: screenWidget,
+      ),
     );
   }
 }
+
+  // decoration: const BoxDecoration(
+  //         gradient: LinearGradient(
+  //             colors: [Colors.purpleAccent, Color.fromARGB(255, 88, 88, 88)],
+  //             begin: Alignment.topLeft,
+  //             end: Alignment.bottomRight),
+  //       ),
