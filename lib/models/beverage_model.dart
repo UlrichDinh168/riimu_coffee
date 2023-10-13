@@ -35,15 +35,15 @@ enum Category {
 }
 
 const categoryIcons = {
-  Category.water: Icons.water,
+  Category.water: Icons.water_drop_outlined,
   Category.time: Icons.alarm,
   Category.app: Icons.app_blocking,
-  Category.info: Icons.info,
-  Category.cup: Icons.donut_large,
-  Category.bean: Icons.donut_large,
-  Category.degree: Icons.comment,
+  Category.info: Icons.info_outline,
+  Category.cup: Icons.dining_outlined,
+  Category.bean: Icons.crop_square,
+  Category.degree: Icons.device_thermostat_outlined,
 
-  Category.clean: Icons.read_more,
+  Category.clean: Icons.calendar_month,
 
   // Cold beverages
   Category.coke: Icons.podcasts,
@@ -62,14 +62,14 @@ class Salesperson {
 
 class DescriptionItem {
   final Category category;
-  final int? amount;
-  final int? remain;
-  final int? degree;
+  final double? total;
+  final double? remain;
+  final double? degree;
   final String? desc;
 
   DescriptionItem({
     required this.category,
-    this.amount,
+    this.total,
     this.remain,
     this.degree,
     this.desc,

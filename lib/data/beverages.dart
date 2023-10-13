@@ -1,4 +1,4 @@
-import 'package:riimu_coffee/models/filter_coffee.dart';
+import 'package:riimu_coffee/models/beverage_model.dart';
 
 final List<Beverage> beverages = [
   Beverage(
@@ -14,9 +14,9 @@ final List<Beverage> beverages = [
       ),
       DescriptionItem(
         category: Category.cup,
-        amount: 100,
-        remain: 20,
-        desc: '5 normal cups',
+        total: 100.0,
+        remain: 20.0,
+        desc: 'cups',
       ),
       DescriptionItem(
         category: Category.time,
@@ -33,14 +33,14 @@ final List<Beverage> beverages = [
     description: Description(properties: [
       DescriptionItem(
         category: Category.water,
-        amount: 100,
-        remain: 20,
+        total: 100.0,
+        remain: 20.0,
         desc: 'espressos',
       ),
       DescriptionItem(
         category: Category.bean,
-        amount: 100,
-        remain: 90,
+        total: 100.0,
+        remain: 90.0,
         desc: 'espressos',
       ),
       DescriptionItem(
@@ -58,13 +58,13 @@ final List<Beverage> beverages = [
     description: Description(properties: [
       DescriptionItem(
         category: Category.water,
-        amount: 30,
-        remain: 10,
+        total: 100.0,
+        remain: 10.0,
         desc: 'teas',
       ),
       DescriptionItem(
         category: Category.degree,
-        degree: 80,
+        degree: 80.0,
         desc: 'degree C',
       ),
     ]),
@@ -79,37 +79,37 @@ final List<Beverage> beverages = [
     description: Description(properties: [
       DescriptionItem(
         category: Category.degree,
-        degree: 4,
+        degree: 4.0,
         desc: 'degree C',
       ),
       DescriptionItem(
         category: Category.coke,
-        amount: 100,
-        remain: 20,
+        total: 100.0,
+        remain: 10.0,
         desc: 'left',
       ),
       DescriptionItem(
         category: Category.beer,
-        amount: 100,
-        remain: 20,
+        total: 100.0,
+        remain: 90.0,
         desc: 'left',
       ),
       DescriptionItem(
         category: Category.cider,
-        amount: 100,
-        remain: 20,
+        total: 100.0,
+        remain: 20.0,
         desc: 'left',
       ),
       DescriptionItem(
         category: Category.heiniken,
-        amount: 100,
-        remain: 20,
+        total: 100.0,
+        remain: 50.0,
         desc: 'left',
       ),
       DescriptionItem(
         category: Category.sting,
-        amount: 100,
-        remain: 20,
+        total: 100.0,
+        remain: 35.0,
         desc: 'left',
       ),
     ]),
