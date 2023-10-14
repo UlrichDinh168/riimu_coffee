@@ -5,7 +5,7 @@ final List<Beverage> beverages = [
     title: 'Filter coffee',
     types: ['Arabica'],
     salespersons: [
-      Salesperson(name: 'Anatasia', status: 'Filter is the thing'),
+      Salesperson(name: 'Anastasia', status: 'Filter is the thing'),
     ],
     description: Description(properties: [
       DescriptionItem(
@@ -14,8 +14,8 @@ final List<Beverage> beverages = [
       ),
       DescriptionItem(
         category: Category.cup,
-        total: 100.0,
-        remain: 20.0,
+        total: 100,
+        remain: 20,
         desc: 'cups',
       ),
       DescriptionItem(
@@ -33,14 +33,14 @@ final List<Beverage> beverages = [
     description: Description(properties: [
       DescriptionItem(
         category: Category.water,
-        total: 100.0,
-        remain: 20.0,
+        total: 100,
+        remain: 20,
         desc: 'espressos',
       ),
       DescriptionItem(
         category: Category.bean,
-        total: 100.0,
-        remain: 90.0,
+        total: 100,
+        remain: 90,
         desc: 'espressos',
       ),
       DescriptionItem(
@@ -54,17 +54,18 @@ final List<Beverage> beverages = [
     types: ['White', 'Black', 'Oolong', 'White', 'Yellow'],
     salespersons: [
       Salesperson(name: 'Mirjan', status: 'Tea connoisseur'),
+      Salesperson(name: 'Duong'),
     ],
     description: Description(properties: [
       DescriptionItem(
         category: Category.water,
-        total: 100.0,
-        remain: 10.0,
+        total: 100,
+        remain: 10,
         desc: 'teas',
       ),
       DescriptionItem(
         category: Category.degree,
-        degree: 80.0,
+        degree: 80,
         desc: 'degree C',
       ),
     ]),
@@ -79,37 +80,37 @@ final List<Beverage> beverages = [
     description: Description(properties: [
       DescriptionItem(
         category: Category.degree,
-        degree: 4.0,
+        degree: 4,
         desc: 'degree C',
       ),
       DescriptionItem(
         category: Category.coke,
-        total: 100.0,
-        remain: 10.0,
+        total: 100,
+        remain: 10,
         desc: 'left',
       ),
       DescriptionItem(
         category: Category.beer,
-        total: 100.0,
-        remain: 90.0,
+        total: 100,
+        remain: 90,
         desc: 'left',
       ),
       DescriptionItem(
         category: Category.cider,
-        total: 100.0,
-        remain: 20.0,
+        total: 100,
+        remain: 20,
         desc: 'left',
       ),
       DescriptionItem(
         category: Category.heiniken,
-        total: 100.0,
-        remain: 50.0,
+        total: 100,
+        remain: 50,
         desc: 'left',
       ),
       DescriptionItem(
         category: Category.sting,
-        total: 100.0,
-        remain: 35.0,
+        total: 100,
+        remain: 35,
         desc: 'left',
       ),
     ]),

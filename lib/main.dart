@@ -31,19 +31,51 @@ class _Start extends State<Start> {
     if (activeScreen == 'details-screen') {
       screenWidget = const DetailsScreen();
     }
-
+    // TODO: Add Layout for same pages
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.red[50],
         body: screenWidget,
       ),
     );
+
+    // return CustomScrollView(
+    //   slivers: <Widget>[
+    //     SliverToBoxAdapter(
+    //       child:
+    //           Image.asset('assets/images/background/coffees.png'), // Your image
+    //     ),
+    //     SliverPadding(
+    //       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+    //       sliver: SliverList(
+    //         delegate: SliverChildBuilderDelegate(
+    //           (BuildContext context, int index) {
+    //             if (activeScreen == 'home-screen') {
+    //               return Home(showDetails: showDetails);
+    //             } else if (activeScreen == 'details-screen') {
+    //               return const DetailsScreen();
+    //             } else {
+    //               // Handle other cases or return a default widget
+    //               return Home(showDetails: showDetails);
+    //             }
+    //           },
+    //           childCount: 1,
+    //         ),
+    //       ),
+    //     ),
+    //     SliverToBoxAdapter(
+    //       child: Container(
+    //         color: const Color.fromARGB(
+    //             255, 65, 2, 2), // Set the background color to red
+    //         height: 70, // Set the desired height
+    //         child: Image.asset(
+    //           'assets/images/background/riimu-logo.png',
+    //           width: 10, // Set the desired width
+    //           height: 10, // Set the desired height), // Your image
+    //         ),
+    //       ),
+    //     )
+    //   ],
+    // );
   }
 }
-
-  // decoration: const BoxDecoration(
-  //         gradient: LinearGradient(
-  //             colors: [Colors.purpleAccent, Color.fromARGB(255, 88, 88, 88)],
-  //             begin: Alignment.topLeft,
-  //             end: Alignment.bottomRight),
-  //       ),

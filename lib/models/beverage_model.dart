@@ -55,9 +55,9 @@ const categoryIcons = {
 
 class Salesperson {
   final String name;
-  final String status;
+  final String? status;
 
-  Salesperson({required this.name, required this.status});
+  Salesperson({required this.name, this.status});
 }
 
 class DescriptionItem {

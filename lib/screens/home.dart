@@ -20,15 +20,58 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.all(20),
-        child: ListView.builder(
-          itemCount: beverages.length,
-          itemBuilder: (context, index) {
-            final beverage = beverages[index];
-
-            return BeverageCard(beverage: beverage, showDetails: showDetails);
-          },
-        ));
+    return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: SizedBox(
+        width: 40,
+        height: 40,
+        child: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.red[50],
+          child: const Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 20,
+            ),
+          ),
+        ),
+      ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Image.asset(
+              'assets/images/background/coffees.png',
+              fit: BoxFit.cover,
+            ), // Your image
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  final beverage = beverages[index];
+                  return BeverageCard(
+                      beverage: beverage, showDetails: showDetails);
+                },
+                childCount: beverages.length,
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              color: const Color.fromARGB(255, 65, 2, 2),
+              height: 70,
+              child: Image.asset(
+                'assets/images/background/riimu-logo.png',
+                width: 10,
+                height: 10,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
