@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:riimu_coffee/screens/detail_screen/components/beverage_card.dart';
-import 'package:riimu_coffee/data/beverages.dart';
 import 'package:riimu_coffee/models/beverage.dart';
-import 'package:riimu_coffee/screens/detail_screen/detail.dart';
+import 'package:riimu_coffee/screens/detail_screen/components/beverage_item.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({
-    super.key,
-  });
+class DetailScreen extends StatelessWidget {
+  const DetailScreen({super.key, required this.selectedBeverage});
 
-  void _selectBeverageCategory(
-      BuildContext context, Beverage selectedBeverage) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => DetailScreen(
-          selectedBeverage: selectedBeverage,
-        ),
-      ),
-    );
+  final Beverage selectedBeverage;
+
+  void _goBack(BuildContext context) {
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: SizedBox(
+        width: 40,
+        height: 40,
+        child: FloatingActionButton(
+          onPressed: () {
+            _goBack(context);
+          },
+          backgroundColor: Colors.red[50],
+          child: const Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 20,
+            ),
+          ),
+        ),
+      ),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
@@ -34,12 +45,12 @@ class HomeScreen extends StatelessWidget {
                 height: 300, // Set
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                  image: const AssetImage(
-                    'assets/images/background/coffees.png',
+                  image: AssetImage(
+                    'assets/images/background/${selectedBeverage.themeImage}.png',
                   ),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.25),
+                    Colors.black.withOpacity(0.3),
                     BlendMode.srcOver,
                   ),
                 )),
@@ -62,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                   bottom: 50,
                   child: Center(
                     child: Text(
-                      'Beverages',
+                      selectedBeverage.title,
                       style: GoogleFonts.rubik(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -74,20 +85,17 @@ class HomeScreen extends StatelessWidget {
           ),
           SliverPadding(
             padding: const EdgeInsets.only(top: 30),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  final beverage = beverages[index];
-                  return BeverageCard(
-                      beverage: beverage,
-                      showDetails: (selectedBeverage) {
-                        _selectBeverageCategory(context, beverage);
-                      });
-                },
-                childCount: beverages.length,
+            sliver: SliverToBoxAdapter(
+              child: BeverageCard(
+                beverage: selectedBeverage,
+                showDetails: (selectedBeverage) {},
               ),
             ),
           ),
+          SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              sliver: SliverToBoxAdapter(
+                  child: BeverageItem(selectedBeverage: selectedBeverage))),
           SliverToBoxAdapter(
             child: Container(
               color: const Color.fromARGB(255, 65, 2, 2),

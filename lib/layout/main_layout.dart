@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riimu_coffee/screens/detail.dart';
+import 'package:riimu_coffee/screens/detail_screen/detail.dart';
 import 'package:riimu_coffee/screens/home.dart';
 
 void main() {
@@ -26,11 +26,11 @@ class _Start extends State<Start> {
 
   @override
   Widget build(BuildContext context) {
-    Widget screenWidget = Home(showDetails: showDetails);
+    Widget screenWidget = const HomeScreen();
     // Widget screenWidget = const TestScreen();
 
     if (activeScreen == 'details-screen') {
-      screenWidget = const DetailsScreen();
+      // screenWidget =  DetailScreen();
     }
 
     // TODO: Add Layout for same pages

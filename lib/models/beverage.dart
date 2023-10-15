@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riimu_coffee/models/beverage_item.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -86,23 +87,29 @@ class Description {
 class Beverage {
   Beverage({
     required this.title,
+    required this.material,
     required this.types,
     required this.salespersons,
     required this.description, // Include it in the constructor
+    required this.themeImage, // Include it in the constructor
+    required this.beverageItem, // Include it in the constructor
   }) : id = uuid.v4();
 
   final String id;
   final String title;
+  final String material;
+  final String themeImage;
   List<String> types;
   // List<SalesPerson> salesperson;
   // List<Description> description;
   final List<Salesperson> salespersons;
   final Description description;
+  final List<BeverageSingleItem> beverageItem;
 
-  @override
-  String toString() {
-    return 'Beverage(title: $title, types: $types, salesperson: $salespersons, description: $description)';
-  }
+  // @override
+  // String toString() {
+  //   return 'Beverage(title: $title, types: $types, salesperson: $salespersons, description: $description)';
+  // }
 }
 
 // class Description {

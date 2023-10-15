@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:riimu_coffee/screens/detail.dart';
 import 'package:riimu_coffee/screens/home.dart';
 
 void main() {
@@ -15,27 +14,13 @@ class Start extends StatefulWidget {
 }
 
 class _Start extends State<Start> {
-  var activeScreen = 'home-screen';
-
-  void showDetails() {
-    // when call setState -> build method runs again and updates the state
-    setState(() {
-      activeScreen = 'details-screen';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    Widget screenWidget = Home(showDetails: showDetails);
-
-    if (activeScreen == 'details-screen') {
-      screenWidget = const DetailsScreen();
-    }
-    // TODO: Add Layout for same pages
     return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.red[100]),
       home: Scaffold(
         backgroundColor: Colors.red[50],
-        body: screenWidget,
+        body: const HomeScreen(),
       ),
     );
 
