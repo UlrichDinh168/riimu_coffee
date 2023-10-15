@@ -24,7 +24,8 @@ class DetailScreen extends StatelessWidget {
           onPressed: () {
             _goBack(context);
           },
-          backgroundColor: Colors.red[50],
+          backgroundColor: Color.fromARGB(255, 253, 233, 236),
+          // Colors.red[50],
           child: const Padding(
             padding: EdgeInsets.only(left: 10),
             child: Icon(

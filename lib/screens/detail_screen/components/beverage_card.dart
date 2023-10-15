@@ -45,7 +45,7 @@ class BeverageCard extends StatelessWidget {
         onTap: () {
           showDetails(beverage);
         },
-        splashColor: Theme.of(context).primaryColor,
+        splashColor: const Color.fromARGB(255, 250, 188, 198),
         borderRadius: BorderRadius.circular(10),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 30.0),
@@ -54,7 +54,8 @@ class BeverageCard extends StatelessWidget {
                 bottom: 10.0), // Adjust the bottom padding value as needed
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.red[100],
+                color: const Color.fromARGB(255, 250, 188, 198),
+                // Colors.red[100],
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.5), // Shadow color
@@ -146,7 +147,7 @@ class BeverageCard extends StatelessWidget {
                                   percent: entry.degree != null
                                       ? degreePercentage
                                       : materialPercentage,
-                                  backgroundColor: Colors.black26,
+                                  backgroundColor: Colors.black54,
                                   progressColor: Colors.red,
                                 ),
                               ),

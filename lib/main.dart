@@ -26,7 +26,7 @@ class _Start extends State<Start> {
       // Navigator.of(context).pushReplacement(
       //   MaterialPageRoute(builder: (context) => const HomeScreen()),
       // );
-      // navigateToHomeScreen();
+      navigateToHomeScreen();
     });
   }
 
@@ -40,9 +40,9 @@ class _Start extends State<Start> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.red[100]),
+      theme: ThemeData(primaryColor: const Color.fromARGB(255, 253, 233, 236)),
       home: Scaffold(
-        backgroundColor: Colors.red[50],
+        backgroundColor: Color.fromARGB(255, 253, 233, 236),
         body: Stack(children: [
           Positioned(
             top: 30, // Adjust to your desired position from the top
@@ -83,48 +83,31 @@ class _Start extends State<Start> {
               ),
             ],
           ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 5,
+            child: Center(
+              child: Image.asset(
+                'assets/images/background/vikingship.png',
+                width: 100,
+                height: 100,
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Center(
+              child: Image.asset(
+                'assets/images/background/waves.png',
+              ),
+            ),
+          ),
         ]),
         //  const HomeScreen(),
       ),
     );
-
-    // return CustomScrollView(
-    //   slivers: <Widget>[
-    //     SliverToBoxAdapter(
-    //       child:
-    //           Image.asset('assets/images/background/coffees.png'), // Your image
-    //     ),
-    //     SliverPadding(
-    //       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-    //       sliver: SliverList(
-    //         delegate: SliverChildBuilderDelegate(
-    //           (BuildContext context, int index) {
-    //             if (activeScreen == 'home-screen') {
-    //               return Home(showDetails: showDetails);
-    //             } else if (activeScreen == 'details-screen') {
-    //               return const DetailsScreen();
-    //             } else {
-    //               // Handle other cases or return a default widget
-    //               return Home(showDetails: showDetails);
-    //             }
-    //           },
-    //           childCount: 1,
-    //         ),
-    //       ),
-    //     ),
-    //     SliverToBoxAdapter(
-    //       child: Container(
-    //         color: const Color.fromARGB(
-    //             255, 65, 2, 2), // Set the background color to red
-    //         height: 70, // Set the desired height
-    //         child: Image.asset(
-    //           'assets/images/background/riimu-logo.png',
-    //           width: 10, // Set the desired width
-    //           height: 10, // Set the desired height), // Your image
-    //         ),
-    //       ),
-    //     )
-    //   ],
-    // );
   }
 }

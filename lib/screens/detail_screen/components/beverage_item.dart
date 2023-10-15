@@ -66,7 +66,9 @@ class BeverageItem extends StatelessWidget {
                             children: [
                               Text(
                                 item.title,
-                                style: const TextStyle(fontSize: 18.0),
+                                style: const TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500),
                               ),
                               const SizedBox(
                                 height: 10,

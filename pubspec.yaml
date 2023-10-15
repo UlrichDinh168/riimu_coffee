@@ -79,6 +79,8 @@ flutter:
     - assets/images/background/riimu_logo.png
     - assets/images/background/riimu_logo_2.png
     - assets/images/background/tea.png
+    - assets/images/background/vikingship.png
+    - assets/images/background/waves.png
     #products
     - assets/images/products/bean_1.png
     - assets/images/products/bean_2.png
