@@ -61,7 +61,7 @@ class DetailScreen extends StatelessWidget {
                 right: 0,
                 child: Center(
                   child: Image.asset(
-                    'assets/images/background/riimu-logo.png',
+                    'assets/images/background/riimu_logo.png',
                     width: 100,
                     height: 100,
                   ),
@@ -101,7 +101,7 @@ class DetailScreen extends StatelessWidget {
               color: const Color.fromARGB(255, 65, 2, 2),
               height: 70,
               child: Image.asset(
-                'assets/images/background/riimu-logo.png',
+                'assets/images/background/riimu_logo.png',
                 width: 10,
                 height: 10,
               ),

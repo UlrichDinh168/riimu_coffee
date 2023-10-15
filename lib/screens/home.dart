@@ -27,50 +27,52 @@ class HomeScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
-            child: Stack(children: <Widget>[
-              Container(
-                width:
-                    double.infinity, // Set the width to match the screen width
-                height: 300, // Set
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: const AssetImage(
-                    'assets/images/background/coffees.png',
-                  ),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.25),
-                    BlendMode.srcOver,
-                  ),
-                )),
-              ),
-              Positioned(
-                top: 30, // Adjust to your desired position from the top
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/background/riimu-logo.png',
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
-              ),
-              Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 50,
-                  child: Center(
-                    child: Text(
-                      'Beverages',
-                      style: GoogleFonts.rubik(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  width: double
+                      .infinity, // Set the width to match the screen width
+                  height: 300, // Set
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: const AssetImage(
+                      'assets/images/background/coffees.png',
+                    ),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.25),
+                      BlendMode.srcOver,
                     ),
                   )),
-            ]),
+                ),
+                Positioned(
+                  top: 30, // Adjust to your desired position from the top
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/background/riimu-logo.png',
+                      width: 100,
+                      height: 100,
+                    ),
+                  ),
+                ),
+                Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 50,
+                    child: Center(
+                      child: Text(
+                        'Beverages',
+                        style: GoogleFonts.rubik(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )),
+              ],
+            ),
           ),
           SliverPadding(
             padding: const EdgeInsets.only(top: 30),
@@ -93,7 +95,7 @@ class HomeScreen extends StatelessWidget {
               color: const Color.fromARGB(255, 65, 2, 2),
               height: 70,
               child: Image.asset(
-                'assets/images/background/riimu-logo.png',
+                'assets/images/background/riimu_logo.png',
                 width: 10,
                 height: 10,
               ),

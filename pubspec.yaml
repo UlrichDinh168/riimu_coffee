@@ -71,12 +71,13 @@ flutter:
     - assets/images/team/mirjan.jpg
     - assets/images/team/ville.jpg
     - assets/images/team/sebastian.jpg
-    # others
+    # background
     - assets/images/background/beans.png
     - assets/images/background/beverages.png
     - assets/images/background/coffee.png
     - assets/images/background/coffees.png
-    - assets/images/background/riimu-logo.png
+    - assets/images/background/riimu_logo.png
+    - assets/images/background/riimu_logo_2.png
     - assets/images/background/tea.png
     #products
     - assets/images/products/bean_1.png

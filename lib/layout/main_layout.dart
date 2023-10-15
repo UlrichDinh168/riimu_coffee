@@ -80,7 +80,7 @@ class _Start extends State<Start> {
 
               height: 65,
               child: Image.asset(
-                'assets/images/background/riimu-logo.png',
+                'assets/images/background/riimu_logo.png',
                 height: 100,
               ),
             ),

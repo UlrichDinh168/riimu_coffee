@@ -54,7 +54,7 @@ class BeverageCard extends StatelessWidget {
                 bottom: 10.0), // Adjust the bottom padding value as needed
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).primaryColor,
+                color: Colors.red[100],
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.5), // Shadow color
