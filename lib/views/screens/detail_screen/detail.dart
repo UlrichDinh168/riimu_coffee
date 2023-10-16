@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riimu_coffee/screens/detail_screen/components/beverage_card.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_card.dart';
 import 'package:riimu_coffee/models/beverage.dart';
-import 'package:riimu_coffee/screens/detail_screen/components/beverage_item.dart';
+import 'package:riimu_coffee/views/screens/detail_screen/beverage_availability/beverage_availability.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key, required this.selectedBeverage});
@@ -24,7 +24,7 @@ class DetailScreen extends StatelessWidget {
           onPressed: () {
             _goBack(context);
           },
-          backgroundColor: Color.fromARGB(255, 253, 233, 236),
+          backgroundColor: const Color.fromARGB(255, 253, 233, 236),
           // Colors.red[50],
           child: const Padding(
             padding: EdgeInsets.only(left: 10),
@@ -41,9 +41,8 @@ class DetailScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: Stack(children: <Widget>[
               Container(
-                width:
-                    double.infinity, // Set the width to match the screen width
-                height: 300, // Set
+                width: double.infinity,
+                height: 300,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                   image: AssetImage(

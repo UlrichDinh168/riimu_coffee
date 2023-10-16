@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riimu_coffee/screens/detail_screen/components/beverage_card.dart';
-import 'package:riimu_coffee/data/beverages.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_card.dart';
+import 'package:riimu_coffee/controllers/data/beverages.dart';
 import 'package:riimu_coffee/models/beverage.dart';
-import 'package:riimu_coffee/screens/detail_screen/detail.dart';
+import 'package:riimu_coffee/views/screens/detail_screen/detail.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -30,9 +30,8 @@ class HomeScreen extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Container(
-                  width: double
-                      .infinity, // Set the width to match the screen width
-                  height: 300, // Set
+                  width: double.infinity,
+                  height: 300,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                     image: const AssetImage(
@@ -46,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                   )),
                 ),
                 Positioned(
-                  top: 30, // Adjust to your desired position from the top
+                  top: 30,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -58,19 +57,20 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 50,
-                    child: Center(
-                      child: Text(
-                        'Beverages',
-                        style: GoogleFonts.rubik(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                  left: 0,
+                  right: 0,
+                  bottom: 50,
+                  child: Center(
+                    child: Text(
+                      'Beverages',
+                      style: GoogleFonts.rubik(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

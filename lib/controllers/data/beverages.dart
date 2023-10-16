@@ -121,14 +121,14 @@ final List<Beverage> beverages = [
         BeverageSingleItem(
             title: 'Herra Coffee',
             description:
-                'Vihreä mate 88%, ananaspalat 4%, ruusun terälehdet 4%, inkivääri 2%, ginseng-juuri 1%  ginseng-öljy 1%.',
+                'Vihreä mate 88%, ananaspalat 4%, ruusunterälehdet 4%, inkivääri 2%, ginseng-juuri 1% ginseng-öljy 1%.',
             rating: 120,
             star: 1,
             image: 'tea_2'),
         BeverageSingleItem(
             title: 'Herra Coffee',
             description:
-                'Musta tee, sitruunapalat, kookospalat,  sitruuna-, passion- ja omena aromi.',
+                'Musta tee, sitruunapalat, kookospalat, sitruuna-, passion- ja omena aromi.',
             rating: 12,
             star: 3.5,
             image: 'tea_3')
@@ -183,27 +183,27 @@ final List<Beverage> beverages = [
         BeverageSingleItem(
             title: 'Herra Coffee',
             description:
-                'Vesi, hiilidioksidi, väri (E150d), happamuuden säätöaineet (E338, E331), makeutusaineet  (aspartaami, asesulfaami K)',
+                'Vesi, hiilidioksidi, väri (E150d), happamuudensäätöaineet (E338, E331), makeutusaineet (aspartaami, asesulfaami K)',
             rating: 102,
             star: 4.5,
             image: 'drink_1'),
         BeverageSingleItem(
             title: 'Herra Coffee',
             description:
-                'Vesi, hiilidioksidi, magnesiumsulfaatti,  kaliumbikarbonaatti, kalsiumkloridi,  kaliumsitraatti.',
+                'Vesi, hiilidioksidi, magnesiumsulfaatti, kaliumbikarbonaatti, kalsiumkloridi, kaliumsitraatti.',
             rating: 2,
             star: 3.5,
             image: 'drink_2'),
         BeverageSingleItem(
             title: 'Herra Coffee',
-            description: '5.5 % Vermont-tyylinen IPA',
+            description: '5.5 %Vermont-tyylinen IPA',
             rating: 54,
             star: 4,
             image: 'drink_3'),
         BeverageSingleItem(
             title: 'Herra Coffee',
             description:
-                '8.0 % Puolikuiva, kellertävä, hapokas, vihero menainen, kevyen yrttinen, hunajainen,  hennon paahteinen',
+                '8.0 %Puolikuiva, kellertävä, hapokas, viheromenainen, kevyen yrttinen, hunajainen, hennon paahteinen',
             rating: 22,
             star: 2.5,
             image: 'drink_4'),

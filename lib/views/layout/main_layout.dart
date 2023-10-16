@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riimu_coffee/screens/detail_screen/detail.dart';
-import 'package:riimu_coffee/screens/home.dart';
+import 'package:riimu_coffee/views/screens/home_screen/home.dart';
 
 void main() {
   runApp(const Start());
