@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riimu_coffee/views/screens/home_screen/home.dart';
+import 'package:riimu_coffee/views/screens/home_screen/home_screen.dart';
 import 'package:riimu_coffee/views/shared/loading/loading.dart';
 
 void main() => runApp(const MaterialApp(home: Start()));
@@ -16,8 +16,8 @@ class _Start extends State<Start> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2, milliseconds: 700), () {
-      // navigateToHomeScreen();
+    Future.delayed(const Duration(seconds: 1, milliseconds: 200), () {
+      navigateToHomeScreen();
     });
   }
 
@@ -31,10 +31,11 @@ class _Start extends State<Start> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-          backgroundColor: Color.fromARGB(255, 253, 233, 236),
-          body: LoadingAnimation(
-            timeout: 2,
-          )),
+        backgroundColor: Color.fromARGB(255, 253, 233, 236),
+        body: LoadingAnimation(
+          timeout: 10,
+        ),
+      ),
     );
   }
 }

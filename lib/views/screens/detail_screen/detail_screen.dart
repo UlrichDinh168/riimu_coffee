@@ -39,35 +39,36 @@ class DetailScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
-            child: Stack(children: <Widget>[
-              Container(
-                width: double.infinity,
-                height: 300,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(
-                    'assets/images/background/${selectedBeverage.themeImage}.png',
-                  ),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.3),
-                    BlendMode.srcOver,
-                  ),
-                )),
-              ),
-              Positioned(
-                top: 30, // Adjust to your desired position from the top
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/background/riimu_logo.png',
-                    width: 100,
-                    height: 100,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  height: 300,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage(
+                      'assets/images/background/${selectedBeverage.themeImage}.png',
+                    ),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.3),
+                      BlendMode.srcOver,
+                    ),
+                  )),
+                ),
+                Positioned(
+                  top: 30, // Adjust to your desired position from the top
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/background/riimu_logo.png',
+                      width: 100,
+                      height: 100,
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
+                Positioned(
                   left: 0,
                   right: 0,
                   bottom: 50,
@@ -80,8 +81,10 @@ class DetailScreen extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                  )),
-            ]),
+                  ),
+                ),
+              ],
+            ),
           ),
           SliverPadding(
             padding: const EdgeInsets.only(top: 30),

@@ -8,7 +8,7 @@ class SalespersonInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
         ...salespersons.map((sp) {
           return Padding(

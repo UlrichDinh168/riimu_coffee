@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:riimu_coffee/models/beverage_item.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -42,19 +41,20 @@ const categoryIcons = {
 };
 
 class Salesperson {
+  Salesperson({required this.name, this.status});
+
   final String name;
   final String? status;
 
-  Salesperson({required this.name, this.status});
+  factory Salesperson.fromJson(Map<String, dynamic> json) {
+    return Salesperson(
+      name: json['name'],
+      status: json['status'],
+    );
+  }
 }
 
 class DescriptionItem {
-  final Category category;
-  final double? total;
-  final double? remain;
-  final double? degree;
-  final String? desc;
-
   DescriptionItem({
     required this.category,
     this.total,
@@ -62,13 +62,68 @@ class DescriptionItem {
     this.degree,
     this.desc,
   });
+
+  final Category category;
+  final double? total;
+  final double? remain;
+  final double? degree;
+  final String? desc;
+
+  factory DescriptionItem.fromJson(Map<String, dynamic> json) {
+    return DescriptionItem(
+      category: Category.values
+          .firstWhere((e) => e.toString() == 'Category.${json['category']}'),
+      total: json['total']?.toDouble(),
+      remain: json['remain']?.toDouble(),
+      degree: json['degree']?.toDouble(),
+      desc: json['desc'],
+    );
+  }
 }
 
 class Description {
+  Description({required this.properties});
+
   // final Map<String, String> properties;
   final List<DescriptionItem> properties;
 
-  Description({required this.properties});
+  // factory Description.fromJson(List<Map<String, dynamic>> jsonList) {
+  //   final List<DescriptionItem> items =
+  //       jsonList.map((json) => DescriptionItem.fromJson(json)).toList();
+  //   return Description(properties: items);
+  // }
+
+  factory Description.fromJson(List<dynamic> jsonList) {
+    final List<DescriptionItem> items =
+        jsonList.map((json) => DescriptionItem.fromJson(json)).toList();
+    return Description(properties: items);
+  }
+}
+
+class BeverageSingleItem {
+  BeverageSingleItem({
+    required this.title,
+    required this.description,
+    required this.rating,
+    required this.star,
+    required this.image,
+  });
+
+  final String title;
+  final String description;
+  final int rating;
+  final double star;
+  final String image;
+
+  factory BeverageSingleItem.fromJson(Map<String, dynamic> json) {
+    return BeverageSingleItem(
+      title: json['title'],
+      description: json['description'],
+      rating: json['rating'],
+      star: json['star'].toDouble(),
+      image: json['image'],
+    );
+  }
 }
 
 class Beverage {
@@ -90,4 +145,29 @@ class Beverage {
   final List<Salesperson> salespersons;
   final Description description;
   final List<BeverageSingleItem> beverageItem;
+
+  factory Beverage.fromJson(Map<String, dynamic> json) {
+    final List<Salesperson> salespersons =
+        (json['salespersons'] as List<dynamic>)
+            .map((salespersonData) => Salesperson.fromJson(salespersonData))
+            .toList();
+
+    final Description description =
+        Description.fromJson(json['description']['properties']);
+
+    final List<BeverageSingleItem> beverageItems =
+        (json['beverageItem'] as List<dynamic>)
+            .map((itemData) => BeverageSingleItem.fromJson(itemData))
+            .toList();
+
+    return Beverage(
+      title: json['title'],
+      material: json['material'],
+      types: (json['types'] as List).map((type) => type.toString()).toList(),
+      salespersons: salespersons,
+      description: description,
+      themeImage: json['themeImage'],
+      beverageItem: beverageItems,
+    );
+  }
 }
