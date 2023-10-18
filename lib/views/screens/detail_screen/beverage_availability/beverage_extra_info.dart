@@ -6,12 +6,12 @@ import 'package:riimu_coffee/models/beverage.dart';
 class BeverageExtraInfo extends StatelessWidget {
   const BeverageExtraInfo({
     Key? key,
-    required this.extraInfo,
-    required this.material,
+    this.extraInfo,
+    this.material,
   }) : super(key: key);
 
-  final List<BeverageSingleItem> extraInfo;
-  final String material;
+  final List<BeverageSingleItem>? extraInfo;
+  final String? material;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +22,7 @@ class BeverageExtraInfo extends StatelessWidget {
           style: GoogleFonts.rubik(fontSize: 25, fontWeight: FontWeight.w400),
         ),
         const SizedBox(height: 5),
-        ...extraInfo.map((item) {
+        ...extraInfo!.map((item) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[

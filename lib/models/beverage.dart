@@ -88,11 +88,6 @@ class Description {
   final List<DescriptionItem> properties;
 
   // factory Description.fromJson(List<Map<String, dynamic>> jsonList) {
-  //   final List<DescriptionItem> items =
-  //       jsonList.map((json) => DescriptionItem.fromJson(json)).toList();
-  //   return Description(properties: items);
-  // }
-
   factory Description.fromJson(List<dynamic> jsonList) {
     final List<DescriptionItem> items =
         jsonList.map((json) => DescriptionItem.fromJson(json)).toList();
@@ -129,22 +124,22 @@ class BeverageSingleItem {
 class Beverage {
   Beverage({
     required this.title,
-    required this.material,
+    this.material,
     required this.types,
     required this.salespersons,
     required this.description,
     required this.themeImage,
-    required this.beverageItem,
+    this.beverageItem,
   }) : id = uuid.v4();
 
   final String id;
   final String title;
-  final String material;
+  final String? material;
   final String themeImage;
   List<String> types;
   final List<Salesperson> salespersons;
   final Description description;
-  final List<BeverageSingleItem> beverageItem;
+  final List<BeverageSingleItem>? beverageItem;
 
   factory Beverage.fromJson(Map<String, dynamic> json) {
     final List<Salesperson> salespersons =
