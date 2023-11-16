@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:riimu_coffee/models/beverage.dart';
+import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/views/screens/home_screen/home_screen.dart';
 import 'package:riimu_coffee/views/shared/loading/loading.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(const MaterialApp(home: Start()));
+void main() async {
+  await Redux().init();
+  runApp(const MaterialApp(home: Start()));
+}
 
 class Start extends StatefulWidget {
   const Start({super.key});
@@ -40,11 +44,11 @@ class _Start extends State<Start> {
     }
   }
 
-  void navigateToHomeScreen() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => HomeScreen(beverages: beverages)),
-    );
-  }
+  // void navigateToHomeScreen() {
+  //   Navigator.of(context).pushReplacement(
+  //     MaterialPageRoute(builder: (context) => HomeScreen(beverages: beverages)),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +70,7 @@ class _Start extends State<Start> {
           },
         ),
       ),
+      theme: ThemeData(),
     );
   }
 }

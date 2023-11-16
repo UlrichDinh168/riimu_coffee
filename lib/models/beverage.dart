@@ -165,4 +165,9 @@ class Beverage {
       beverageItem: beverageItems,
     );
   }
+
+  static List<Beverage> listFromJson(List<dynamic> json) {
+    // json == null ? List<Beverage>() :
+    return json.map((value) => Beverage.fromJson(value)).toList();
+  }
 }
