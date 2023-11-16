@@ -12,6 +12,7 @@ class BeverageExtraInfo extends StatelessWidget {
 
   final List<BeverageSingleItem>? extraInfo;
   final String? material;
+
   @override
   Widget build(BuildContext context) {
     return Column(
