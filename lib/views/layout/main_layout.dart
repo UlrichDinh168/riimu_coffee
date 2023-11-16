@@ -25,7 +25,9 @@ class _Start extends State<Start> {
 
   @override
   Widget build(BuildContext context) {
-    Widget screenWidget = const HomeScreen();
+    Widget screenWidget = const HomeScreen(
+      beverages: [],
+    );
     // Widget screenWidget = const TestScreen();
 
     if (activeScreen == 'details-screen') {

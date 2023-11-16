@@ -1,3 +1,7 @@
+// https://run.mocky.io/v3/775950d3-cd5d-449a-be70-50f8a6f40697 <- full
+// https://run.mocky.io/v3/681ec46b-08ce-4a23-bd98-81fd98c41328 <- card item
+// https://run.mocky.io/v3/5b8efbd6-903d-420e-b942-5fc393d55256 <- beverage item
+
 // import 'package:riimu_coffee/models/beverage.dart';
 
 // final List<Beverage> beverages = [
