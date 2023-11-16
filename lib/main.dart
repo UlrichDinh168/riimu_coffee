@@ -23,40 +23,21 @@ class _Start extends State<Start> {
     '/v3/775950d3-cd5d-449a-be70-50f8a6f40697',
   );
 
-  // void initState() {
-  //   super.initState();
-  //   // _fetchItems();
-  //   //  Future.delayed(const Duration(seconds: 1, milliseconds: 200), () {
-  //   //   navigateToHomeScreen();
-  //   // });
-
   Future<List<Beverage>> _fetchItems() async {
     final response = await http.get(url);
-    print('testing');
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = jsonDecode(response.body);
 
       final List<Beverage> loadedItems =
           jsonList.map((json) => Beverage.fromJson(json)).toList();
 
-      setState(() {
-        beverages = loadedItems;
-      });
-      // if (mounted) {
-      //   //   // check whether the state object is in tree
-      //   setState(() {
-      //     beverages = loadedItems;
-      //   });
-
-      //   // navigateToHomeScreen();
-      //   // }
-      // } else {
-      //   throw Exception('Failed to load album');
-      // }
+      return Future<List<Beverage>>.delayed(
+        const Duration(seconds: 2),
+        () => loadedItems,
+      );
     } else {
       throw Exception('Failed to load data');
     }
-    return beverages;
   }
 
   void navigateToHomeScreen() {
@@ -73,7 +54,6 @@ class _Start extends State<Start> {
         body: FutureBuilder<List<Beverage>>(
           future: _fetchItems(),
           builder: (context, snapshot) {
-            print(snapshot.connectionState);
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const LoadingAnimation(
                 timeout: 10,
@@ -81,14 +61,10 @@ class _Start extends State<Start> {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              //  return  navigateToHomeScreen();
               return HomeScreen(beverages: snapshot.data ?? []);
             }
           },
         ),
-        // LoadingAnimation(
-        //   timeout: 5,
-        // ),
       ),
     );
   }
