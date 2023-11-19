@@ -15,24 +15,37 @@ class SetBeveragesStateAction {
 }
 
 Future<void> fetchBeveragesAction(Store<AppState> store) async {
-  store
-      .dispatch(const SetBeveragesStateAction(BeveragesState(isLoading: true)));
+  store.dispatch(const SetBeveragesStateAction(
+      BeveragesState(isLoading: true, isError: false, beverages: [])));
+
+  final stopwatch = Stopwatch()..start();
 
   try {
     final response = await http.get(Uri.parse(
         'https://run.mocky.io/v3/775950d3-cd5d-449a-be70-50f8a6f40697'));
-    assert(response.statusCode == 200);
+
+    await Future.delayed(const Duration(seconds: 4));
+
+    stopwatch.stop();
+
+    final remainingTime = stopwatch.elapsed;
+
+    if (remainingTime < const Duration(seconds: 2)) {
+      await Future.delayed(const Duration(seconds: 2));
+    }
+
     final jsonData = json.decode(response.body);
     store.dispatch(
       SetBeveragesStateAction(
         BeveragesState(
-            isLoading: false,
-            beverages: Beverage.listFromJson(jsonData),
-            isError: false),
+          isLoading: false,
+          beverages: Beverage.listFromJson(jsonData),
+          isError: false,
+        ),
       ),
     );
   } catch (error) {
-    store.dispatch(
-        const SetBeveragesStateAction(BeveragesState(isLoading: false)));
+    store.dispatch(const SetBeveragesStateAction(
+        BeveragesState(isLoading: false, isError: true, beverages: [])));
   }
 }

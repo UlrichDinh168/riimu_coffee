@@ -6,14 +6,14 @@ import 'package:riimu_coffee/models/beverage.dart';
 
 @immutable
 class BeveragesState {
-  final bool? isError;
-  final bool? isLoading;
-  final List<Beverage>? beverages;
+  final bool isError;
+  final bool isLoading;
+  final List<Beverage> beverages;
 
   const BeveragesState({
-    this.isError = false,
-    this.isLoading = false,
-    this.beverages = const [],
+    required this.isError,
+    required this.isLoading,
+    required this.beverages,
   });
 
   factory BeveragesState.initial() => const BeveragesState(
@@ -23,9 +23,9 @@ class BeveragesState {
       );
 
   BeveragesState copyWith({
-    bool? isError,
-    bool? isLoading,
-    List<Beverage>? beverages,
+    required bool isError,
+    required bool isLoading,
+    required List<Beverage>? beverages,
   }) {
     return BeveragesState(
       isError: isError,

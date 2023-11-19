@@ -1,76 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:riimu_coffee/models/beverage.dart';
+import 'package:riimu_coffee/redux/beverages/beverages_actions.dart';
+import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
 import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/views/screens/home_screen/home_screen.dart';
 import 'package:riimu_coffee/views/shared/loading/loading.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 void main() async {
-  await Redux().init();
-  runApp(const MaterialApp(home: Start()));
+  final redux = Redux();
+
+  await redux.init();
+  runApp(Main(redux: redux));
 }
 
-class Start extends StatefulWidget {
-  const Start({super.key});
+class Main extends StatelessWidget {
+  final Redux redux;
+
+  const Main({super.key, required this.redux});
+
   @override
-  State<StatefulWidget> createState() {
-    return _Start();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: StoreProvider<AppState>(
+        store: redux.store,
+        child: MyApp(redux: redux),
+      ),
+    );
   }
 }
 
-class _Start extends State<Start> {
+class MyApp extends StatefulWidget {
+  final Redux redux;
+
+  const MyApp({super.key, required this.redux});
+  @override
+  State<StatefulWidget> createState() {
+    return _MyApp();
+  }
+}
+
+class _MyApp extends State<MyApp> {
   List<Beverage> beverages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _onFetchBeveragesPressed();
+  }
 
   final url = Uri.https(
     'run.mocky.io',
     '/v3/775950d3-cd5d-449a-be70-50f8a6f40697',
   );
 
-  Future<List<Beverage>> _fetchItems() async {
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonList = jsonDecode(response.body);
-
-      final List<Beverage> loadedItems =
-          jsonList.map((json) => Beverage.fromJson(json)).toList();
-
-      return Future<List<Beverage>>.delayed(
-        const Duration(seconds: 2),
-        () => loadedItems,
-      );
-    } else {
-      throw Exception('Failed to load data');
-    }
+  void _onFetchBeveragesPressed() {
+    widget.redux.store.dispatch(fetchBeveragesAction(widget.redux.store));
   }
-
-  // void navigateToHomeScreen() {
-  //   Navigator.of(context).pushReplacement(
-  //     MaterialPageRoute(builder: (context) => HomeScreen(beverages: beverages)),
-  //   );
-  // }
+//TODO: routing
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 253, 233, 236),
-        body: FutureBuilder<List<Beverage>>(
-          future: _fetchItems(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+        body: StoreConnector<AppState, BeveragesState>(
+          converter: (store) {
+            return store.state.beveragesState;
+          },
+          builder: (context, beveragesState) {
+            if (beveragesState.isLoading) {
               return const LoadingAnimation(
                 timeout: 10,
               );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
             } else {
-              return HomeScreen(beverages: snapshot.data ?? []);
+              return HomeScreen(beverages: beveragesState.beverages);
             }
           },
         ),
       ),
-      theme: ThemeData(),
+      // theme: ThemeData(),
     );
   }
 }
