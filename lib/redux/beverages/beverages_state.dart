@@ -1,5 +1,3 @@
-// import 'package:meta/meta.dart';
-
 import 'package:meta/meta.dart';
 
 import 'package:riimu_coffee/models/beverage.dart';
@@ -16,11 +14,19 @@ class BeveragesState {
     required this.beverages,
   });
 
-  factory BeveragesState.initial() => const BeveragesState(
-        isLoading: false,
-        isError: false,
-        beverages: [],
-      );
+  factory BeveragesState.initial(
+      {bool isError = false, bool isLoading = false}) {
+    return const BeveragesState(
+      isLoading: false,
+      isError: false,
+      beverages: [],
+    );
+  }
+
+  @override
+  String toString() {
+    return 'BeveragesState{isError: $isError, isLoading: $isLoading, beverages: $beverages}';
+  }
 
   BeveragesState copyWith({
     required bool isError,
