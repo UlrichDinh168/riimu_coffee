@@ -1,89 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:riimu_coffee/models/beverage.dart';
+import 'package:redux/redux.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_actions.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
+import 'package:riimu_coffee/redux/inventory/base_data_actions.dart';
+import 'package:riimu_coffee/redux/inventory/base_data_state.dart';
 import 'package:riimu_coffee/redux/store.dart';
+import 'package:riimu_coffee/theme/default_theme.dart';
+import 'package:riimu_coffee/views/screens/detail_screen/detail_screen.dart';
 import 'package:riimu_coffee/views/screens/home_screen/home_screen.dart';
 import 'package:riimu_coffee/views/shared/loading/loading.dart';
 
 void main() async {
-  final redux = Redux();
+  // final redux = Redux();
+  final store = await createStore();
 
-  await redux.init();
-  runApp(Main(redux: redux));
+  runApp(Main(store: store));
 }
 
-class Main extends StatelessWidget {
-  final Redux redux;
+class Main extends StatefulWidget {
+  final Store<AppState> store;
 
-  const Main({super.key, required this.redux});
+  const Main({super.key, required this.store});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: StoreProvider<AppState>(
-        store: redux.store,
-        child: MyApp(redux: redux),
-      ),
-    );
-  }
+  createState() => _AppState();
 }
 
-class MyApp extends StatefulWidget {
-  final Redux redux;
-
-  const MyApp({super.key, required this.redux});
-  @override
-  State<StatefulWidget> createState() {
-    return _MyApp();
+class _AppState extends State<Main> {
+  Future<void> _initializeData() async {
+    await fetchBaseData(widget.store);
+    await fetchBeverages(widget.store);
   }
-}
-
-class _MyApp extends State<MyApp> {
-  List<Beverage> beverages = [];
 
   @override
   void initState() {
     super.initState();
-    _onFetchBeveragesPressed();
   }
-
-  final url = Uri.https(
-    'run.mocky.io',
-    '/v3/775950d3-cd5d-449a-be70-50f8a6f40697',
-  );
-
-  void _onFetchBeveragesPressed() {
-    widget.redux.store.dispatch(fetchBeveragesAction(widget.redux.store));
-  }
-//TODO: routing
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 253, 233, 236),
-        body: StoreConnector<AppState, BeveragesState>(
-          converter: (store) {
-            return store.state.beveragesState;
-          },
-          builder: (context, beveragesState) {
-            if (beveragesState.isLoading) {
-              return const LoadingAnimation(
-                timeout: 10,
-              );
-            } else {
-              return HomeScreen(beverages: beveragesState.beverages);
-            }
-          },
-        ),
+    return StoreProvider<AppState>(
+      store: widget.store,
+      child: MaterialApp(
+        theme: ThemeData(
+            colorScheme: DefaultTheme().colorScheme, useMaterial3: true),
+        home: Scaffold(
+            backgroundColor: const Color.fromARGB(255, 253, 233, 236),
+            body: FutureBuilder(
+              future: _initializeData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const LoadingAnimation(
+                    timeout: 10,
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return Scaffold(
+                    body: StoreConnector<AppState, BeveragesState>(
+                      converter: (store) {
+                        return store.state.beveragesState;
+                      },
+                      builder: (context, beveragesState) {
+                        return const HomeScreen();
+                      },
+                    ),
+                  );
+                }
+              },
+            )),
+        routes: <String, WidgetBuilder>{
+          "/home": (BuildContext context) => const HomeScreen(),
+          // "/detail": (BuildContext context) => DetailScreen(),
+        },
+        // theme: ThemeData(),
       ),
-      // theme: ThemeData(),
     );
   }
 }
