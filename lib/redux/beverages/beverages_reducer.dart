@@ -6,7 +6,9 @@ BeveragesState beverageReducer(BeveragesState state, dynamic action) {
     return BeveragesState(
         isLoading: false,
         isError: action.data.isError,
-        beverages: action.data.beverages);
+        beverages: action.data.beverages,
+        pageNumber: action.data.pageNumber,
+        end: action.data.end);
   }
 
   return state;

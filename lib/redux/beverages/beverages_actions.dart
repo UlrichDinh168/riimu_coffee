@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer' as dev;
 
 import 'package:redux/redux.dart';
@@ -21,15 +20,68 @@ class SetBeveragesAction {
   SetBeveragesAction({required this.data});
 }
 
-Future<void> fetchBeverages(Store<AppState> store, {int pageNumber = 1}) async {
+// Future<void> fetchBeverages(Store<AppState> store, {int pageNumber = 1}) async {
+//     final state = store.state.beveragesState;
+
+//  if (state.isLoading || state.end) {
+//     return;
+//   }
+
+//   store.dispatch(
+//       SetBeveragesAction(data: BeveragesState.initial(isLoading: true)));
+
+//   try {
+//     final beveragesResponse = await http
+//         .get(Uri.parse('${endpoints['beverageList']!}?page=$pageNumber'));
+
+//     if (beveragesResponse.statusCode == 200) {
+//       final Map<String, String> labels = store.state.baseDataState.labels;
+//       final Map<String, List<InventoryItem>> inventoryItems =
+//           store.state.baseDataState.inventories;
+//       final Map<String, List<AvailableItem>> availableItems =
+//           store.state.baseDataState.availableItems;
+
+//       final List<Beverage> beverages = parseBeverages(
+//         beveragesResponse: beveragesResponse,
+//         labels: labels,
+//         inventoryItems: inventoryItems,
+//         availableItems: availableItems,
+//       );
+
+//       final updatedBeverages = List.from(state.beverages)..addAll(beverages.values);
+
+//       store.dispatch(
+//         SetBeveragesAction(
+//           data: BeveragesState(
+//             isLoading: false,
+//             isError: false,
+//             beverages: updatedBeverages,
+//           ),
+//         ),
+//       );
+//     }
+//   } catch (error) {
+//     dev.log('Error decoding JSON: $error');
+//     store.dispatch(SetBeveragesAction(
+//         data: const BeveragesState(
+//             isLoading: false, isError: true, beverages: [])));
+//   }
+// }
+Future<void> fetchBeverages(Store<AppState> store) async {
+  final state = store.state.beveragesState;
+
+  if (state.isLoading || state.end) {
+    return;
+  }
+
   store.dispatch(
       SetBeveragesAction(data: BeveragesState.initial(isLoading: true)));
-
-  // final stopwatch = Stopwatch()..start();
-
+  print(state.pageNumber);
   try {
+    final int nextPageNumber = state.pageNumber + 1;
+
     final beveragesResponse = await http
-        .get(Uri.parse('${endpoints['beverageList']!}?page=$pageNumber'));
+        .get(Uri.parse('${endpoints['beverageList']!}?page=$nextPageNumber'));
 
     if (beveragesResponse.statusCode == 200) {
       final Map<String, String> labels = store.state.baseDataState.labels;
@@ -38,56 +90,41 @@ Future<void> fetchBeverages(Store<AppState> store, {int pageNumber = 1}) async {
       final Map<String, List<AvailableItem>> availableItems =
           store.state.baseDataState.availableItems;
 
-      // final List<dynamic> jsonData = json.decode(beveragesResponse.body);
-
-      // List<Beverage> beverages =
-      //     jsonData.map((item) => Beverage.fromJson(item)).toList();
-
-      final List<Beverage> beverages = parseBeverages(
+      final List<Beverage> newBeverages = parseBeverages(
         beveragesResponse: beveragesResponse,
         labels: labels,
         inventoryItems: inventoryItems,
         availableItems: availableItems,
       );
 
+      final List<Beverage> updatedBeverages = List.from(state.beverages)
+        ..addAll(newBeverages);
+
+      // Check if there are more items to fetch on the next page
+      final bool end = newBeverages.isEmpty;
+
       store.dispatch(
         SetBeveragesAction(
           data: BeveragesState(
             isLoading: false,
-            beverages: beverages,
             isError: false,
+            beverages: updatedBeverages,
+            pageNumber: nextPageNumber,
+            end: end,
           ),
         ),
       );
     }
-
-    // List<Beverage> beverages = jsonData.map((item) => Beverage.fromJson(item)).toList();
-
-    // await Future.delayed(const Duration(seconds: 2));
-    // stopwatch.stop();
-
-    // final remainingTime = stopwatch.elapsed;
-
-    // if (remainingTime < const Duration(seconds: 1)) {
-    //   await Future.delayed(const Duration(seconds: 1));
-    // }
-    // if (response.statusCode == '200') {
-    //   final jsonData = json.decode(response.body);
-
-    //   print(jsonData);
-
-    //   dev.log(
-    //     jsonData,
-    //   );
-
-    // }
-
-    // List<Beverage> beverages =
-    //     List.from(jsonData['beverages'].map((item) => Beverage.fromJson(item)));
   } catch (error) {
     dev.log('Error decoding JSON: $error');
-    store.dispatch(SetBeveragesAction(
-        data: const BeveragesState(
-            isLoading: false, isError: true, beverages: [])));
+    store.dispatch(
+      SetBeveragesAction(
+        data: state.copyWith(
+          isLoading: false,
+          isError: true,
+          beverages: [],
+        ),
+      ),
+    );
   }
 }
