@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riimu_coffee/models/available_items.dart';
-import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_weekly_consumption.dart';
+import 'package:riimu_coffee/views/screens/detail_screen/beverage_availability/beverage_weekly_consumption.dart';
 
 class BeverageConsumption extends StatelessWidget {
   const BeverageConsumption({
