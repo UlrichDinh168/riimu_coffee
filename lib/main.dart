@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:riimu_coffee/models/beverage.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_actions.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
-import 'package:riimu_coffee/redux/inventory/base_data_actions.dart';
-import 'package:riimu_coffee/redux/inventory/base_data_state.dart';
+import 'package:riimu_coffee/redux/baseData/base_data_actions.dart';
+import 'package:riimu_coffee/redux/people/people_actions.dart';
+
 import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/theme/default_theme.dart';
 import 'package:riimu_coffee/views/screens/detail_screen/detail_screen.dart';
+
 import 'package:riimu_coffee/views/screens/home_screen/home_screen.dart';
 import 'package:riimu_coffee/views/shared/loading/loading.dart';
 
@@ -72,7 +75,12 @@ class _AppState extends State<Main> {
             )),
         routes: <String, WidgetBuilder>{
           "/home": (BuildContext context) => const HomeScreen(),
-          // "/detail": (BuildContext context) => DetailScreen(),
+          // "/detail": (BuildContext context) => const DetailScreen(selectedBeverage: ,),
+          "/detail": (BuildContext context) {
+            final selectedBeverage =
+                StoreProvider.of<AppState>(context).state.selectedBeverage;
+            return DetailScreen(selectedBeverage: selectedBeverage);
+          },
         },
         // theme: ThemeData(),
       ),

@@ -53,21 +53,21 @@ Map<String, List<InventoryItem>> parseInventoryItems(
   return inventoryItems;
 }
 
-// List<Person> parsePersonChips(Response peopleDataResponse) {
-//   final fetchedPeopleData = json.decode(peopleDataResponse.body);
-//   final List<Person> personChips = fetchedPeopleData
-//       .map<Person>(
-//         (personData) => PersonChip(
-//           id: personData['id'],
-//           imageUrl: personData['imageUrl'],
-//           fullName: personData['fullName'],
-//           description: personData['description'],
-//         ),
-//       )
-//       .toList();
+List<Person> parsePersonChips(Response peopleDataResponse) {
+  final fetchedPeopleData = json.decode(peopleDataResponse.body);
+  final List<Person> personChips = fetchedPeopleData
+      .map<Person>(
+        (personData) => Person(
+          id: personData['id'],
+          imageUrl: personData['imageUrl'],
+          fullName: personData['fullName'],
+          description: personData['description'],
+        ),
+      )
+      .toList();
 
-//   return personChips;
-// }
+  return personChips;
+}
 
 Map<String, String> parseBeveragesIdentifiers(Response identifiersResponse) {
   final fetchedIdentifiersData = json.decode(identifiersResponse.body);

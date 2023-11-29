@@ -1,27 +1,38 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:riimu_coffee/models/beverage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_description.dart';
+import 'package:riimu_coffee/models/person.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_brewing_time.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_cleaned_date.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_info.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_inventory_items.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_temperature.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_type.dart';
-import 'package:riimu_coffee/views/screens/home_screen/beverage_card/salesperson.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_person.dart';
 
 class BeverageCard extends StatelessWidget {
   const BeverageCard({
-    Key? key,
+    super.key,
     required this.beverage,
-    required this.showDetails,
-  }) : super(key: key);
+    this.showDetails,
+    required this.beveragePeopleData,
+  });
 
   final Beverage beverage;
-  final void Function(Beverage beverage) showDetails;
+  // final void Function(Beverage beverage) showDetails;
+  final Function(Beverage)? showDetails;
+
+  final List<Person> beveragePeopleData;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: InkWell(
         onTap: () {
-          showDetails(beverage);
+          showDetails?.call(beverage);
         },
         splashColor: const Color.fromARGB(255, 250, 188, 198),
         borderRadius: BorderRadius.circular(10),
@@ -52,15 +63,28 @@ class BeverageCard extends StatelessWidget {
                         fontSize: 25, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(height: 5),
-                  BeverageType(beverageTypes: beverage.types),
+                  BeverageType(beverageTypes: beverage.labels),
                   const SizedBox(height: 5),
-                  BeverageDescription(
-                      beverageDescriptions: beverage.description,
-                      title: beverage.title),
-                  const SizedBox(
-                    height: 20,
+                  // BeverageDescription(
+                  //     beverageDescriptions: beverage.info,
+                  //     title: beverage.title),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // SalespersonInfo(salespersons: beverage.salespersons)
+                  beverage.info != ''
+                      ? BeverageInfo(info: beverage.info)
+                      : const SizedBox(),
+                  if (beverage.temperature != '')
+                    BeverageTemperature(temperature: beverage.temperature),
+                  BeverageInventoryItems(
+                    inventoryItems: beverage.inventoryItems,
                   ),
-                  SalespersonInfo(salespersons: beverage.salespersons)
+                  if (beverage.minutesFromBrewing != '')
+                    BeverageBrewingTime(minutes: beverage.minutesFromBrewing),
+                  if (beverage.dateCleaned != '')
+                    BeverageCleaningDate(cleaningDate: beverage.dateCleaned),
+                  BeveragePersonInfo(persons: beveragePeopleData),
                 ],
               ),
             ),
