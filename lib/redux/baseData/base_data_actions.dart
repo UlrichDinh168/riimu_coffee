@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:redux/redux.dart';
 import 'package:riimu_coffee/controllers/api/api.dart';
 import 'package:riimu_coffee/models/available_items.dart';
 import 'package:riimu_coffee/models/inventory_items.dart';
-import 'package:riimu_coffee/redux/inventory/base_data_state.dart';
+import 'package:riimu_coffee/redux/baseData/base_data_state.dart';
 import 'package:http/http.dart' as http;
 import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/utils/parse_function.dart';
@@ -60,7 +58,6 @@ Future<void> fetchBaseData(Store<AppState> store) async {
         availableItems: availableItems,
         identifiers: beveragesIdentifiers,
       );
-      print('baseData');
 
       store.dispatch(SetBaseDataAction(data: baseData));
     }

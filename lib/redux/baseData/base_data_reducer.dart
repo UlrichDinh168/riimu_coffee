@@ -1,5 +1,5 @@
-import 'package:riimu_coffee/redux/inventory/base_data_state.dart';
-import 'package:riimu_coffee/redux/inventory/base_data_actions.dart';
+import 'package:riimu_coffee/redux/baseData/base_data_state.dart';
+import 'package:riimu_coffee/redux/baseData/base_data_actions.dart';
 
 BaseDataState baseDataReducer(BaseDataState state, dynamic action) {
   if (action is SetBaseDataAction) {
