@@ -8,5 +8,5 @@ Map<String, String> endpoints = {
   'availableItems': '$baseURL/availableItems',
   'beverageLabels': '$baseURL/bevarageLabels',
   'beveragesIdentifiers': '$baseURL/bevaragesIdentifiers',
-  'person': '$baseURL/peopleData',
+  'peopleData': '$baseURL/peopleData',
 };
