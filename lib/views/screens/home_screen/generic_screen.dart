@@ -31,7 +31,7 @@ class _GenericScreenState extends State<GenericScreen> {
 
   final ScrollController _scrollController = ScrollController();
 
-  // bool isLoadingPage = false;
+  bool isLoadingPage = false;
 
   @override
   void dispose() {
@@ -54,6 +54,9 @@ class _GenericScreenState extends State<GenericScreen> {
         !_scrollController.position.outOfRange &&
         !state.isLoading &&
         !state.end) {
+      setState(() {
+        isLoadingPage = true;
+      });
       _fetchMoreData();
     }
   }
@@ -64,46 +67,63 @@ class _GenericScreenState extends State<GenericScreen> {
 
     await fetchBeverages(store);
     // _scrollController.jumpTo(previousScrollPosition);
+    setState(() {
+      // Loading page
+      isLoadingPage = false;
+    });
   }
 
   Widget _buildListView(BeveragesState state) {
     return StoreConnector<AppState, BeveragesState>(
-        converter: (store) => store.state.beveragesState,
-        builder: (context, beveragesState) {
-          return ListView.separated(
-            controller: _scrollController,
-            itemCount: state.isLoading
-                ? state.beverages.length + 1 // Footer
-                : state.beverages.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 10.0);
-            },
-            itemBuilder: (BuildContext context, int index) {
-              if (state.isLoading) {
-                // index < state.beverages.length
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                final beverage = state.beverages[index];
-                return BeverageCard(
-                  beverage: beverage,
-                  showDetails: (selectedBeverage) {
-                    Store<AppState> store = StoreProvider.of<AppState>(context);
-                    store.dispatch(SelectItemAction(selectedBeverage));
-                    Navigator.pushNamed(context, '/detail');
-                  },
-                );
-              }
-            },
-          );
-        });
+      converter: (store) => store.state.beveragesState,
+      builder: (context, beveragesState) {
+        return ListView(
+          controller: _scrollController,
+          children: [
+            const HeaderImage(),
+            const SizedBox(height: 10.0), // Adjust the header spacing as needed
+            ...List.generate(
+              state.isLoading
+                  ? state.beverages.length + 1
+                  : state.beverages.length,
+              (index) {
+                if (index == state.beverages.length) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  final beverage = state.beverages[index];
+                  return BeverageCard(
+                    beverage: beverage,
+                    showDetails: (selectedBeverage) {
+                      Store<AppState> store =
+                          StoreProvider.of<AppState>(context);
+                      store.dispatch(SelectItemAction(selectedBeverage));
+                      Navigator.pushNamed(context, '/detail');
+                    },
+                  );
+                }
+              },
+            ),
+            if (isLoadingPage)
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 10.0), // Adjust the header spacing as needed
+                ],
+              ),
+          ],
+        );
+      },
+    );
   }
 
   Widget _buildBody() {
     return Column(
       children: [
-        const HeaderImage(),
+        // const HeaderImage(),
         Expanded(
           child: StoreConnector<AppState, BeveragesState>(
             converter: (store) => store.state.beveragesState,
@@ -112,7 +132,7 @@ class _GenericScreenState extends State<GenericScreen> {
             },
           ),
         ),
-        // const FooterImage(),
+        const FooterImage(),
       ],
     );
   }
