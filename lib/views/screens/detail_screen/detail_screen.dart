@@ -14,8 +14,6 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(selectedBeverage.availableItems);
-
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: const SizedBox(
@@ -43,7 +41,7 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           children: [
             BeverageCard(
-              beveragePeopleData: const [],
+              // beveragePeopleData: const [],
               beverage: selectedBeverage,
             ),
             Padding(

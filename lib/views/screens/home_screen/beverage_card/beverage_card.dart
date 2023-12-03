@@ -1,30 +1,26 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:riimu_coffee/models/beverage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riimu_coffee/models/person.dart';
+import 'package:riimu_coffee/redux/people/people_state.dart';
+import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_brewing_time.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_cleaned_date.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_info.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_inventory_items.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_temperature.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_type.dart';
-import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_person.dart';
+import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_person_info.dart';
 
 class BeverageCard extends StatelessWidget {
   const BeverageCard({
     super.key,
     required this.beverage,
     this.showDetails,
-    required this.beveragePeopleData,
   });
 
   final Beverage beverage;
-  // final void Function(Beverage beverage) showDetails;
   final Function(Beverage)? showDetails;
-
-  final List<Person> beveragePeopleData;
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +61,7 @@ class BeverageCard extends StatelessWidget {
                   const SizedBox(height: 5),
                   BeverageType(beverageTypes: beverage.labels),
                   const SizedBox(height: 5),
-                  // BeverageDescription(
-                  //     beverageDescriptions: beverage.info,
-                  //     title: beverage.title),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
+
                   // SalespersonInfo(salespersons: beverage.salespersons)
                   beverage.info != ''
                       ? BeverageInfo(info: beverage.info)
@@ -84,7 +75,9 @@ class BeverageCard extends StatelessWidget {
                     BeverageBrewingTime(minutes: beverage.minutesFromBrewing),
                   if (beverage.dateCleaned != '')
                     BeverageCleaningDate(cleaningDate: beverage.dateCleaned),
-                  BeveragePersonInfo(persons: beveragePeopleData),
+                  BeveragePersonInfo(
+                    peopleIds: beverage.persons,
+                  ),
                 ],
               ),
             ),

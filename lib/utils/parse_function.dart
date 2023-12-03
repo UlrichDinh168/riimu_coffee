@@ -53,7 +53,7 @@ Map<String, List<InventoryItem>> parseInventoryItems(
   return inventoryItems;
 }
 
-List<Person> parsePersonChips(Response peopleDataResponse) {
+List<Person> parsePerson(Response peopleDataResponse) {
   final fetchedPeopleData = json.decode(peopleDataResponse.body);
   final List<Person> personChips = fetchedPeopleData
       .map<Person>(
@@ -87,6 +87,7 @@ List<Beverage> parseBeverages({
   required Map<String, List<AvailableItem>> availableItems,
 }) {
   final List<dynamic> fetchedBeverages = json.decode(beveragesResponse.body);
+
   final List<Beverage> beverages = fetchedBeverages.map<Beverage>(
     (beverage) {
       final Map<String, dynamic> beverageJson = {
@@ -128,6 +129,7 @@ List<Beverage> parseBeverages({
           beverageAvailableItems.add(availableItems[itemKey]!);
         },
       );
+
       final List<AvailableItem> flattenedAvailableItems =
           beverageAvailableItems.expand((i) => i).toList();
       beverageJson['availableItems'] = flattenedAvailableItems;

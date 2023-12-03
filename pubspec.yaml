@@ -47,6 +47,7 @@ dependencies:
   redux_thunk: ^0.4.0
   meta: ^1.9.1
   redux_logging: ^0.5.1
+  flutter_svg: ^2.0.9
   # built_collection: ^5.1.1
   # built_value: ^8.7.0
 

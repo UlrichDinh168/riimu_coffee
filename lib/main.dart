@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:riimu_coffee/models/beverage.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_actions.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
 import 'package:riimu_coffee/redux/baseData/base_data_actions.dart';
-import 'package:riimu_coffee/redux/people/people_actions.dart';
 
 import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/theme/default_theme.dart';
@@ -60,22 +58,12 @@ class _AppState extends State<Main> {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  return Scaffold(
-                    body: StoreConnector<AppState, BeveragesState>(
-                      converter: (store) {
-                        return store.state.beveragesState;
-                      },
-                      builder: (context, beveragesState) {
-                        return const HomeScreen();
-                      },
-                    ),
-                  );
+                  return const Scaffold(body: HomeScreen());
                 }
               },
             )),
         routes: <String, WidgetBuilder>{
           "/home": (BuildContext context) => const HomeScreen(),
-          // "/detail": (BuildContext context) => const DetailScreen(selectedBeverage: ,),
           "/detail": (BuildContext context) {
             final selectedBeverage =
                 StoreProvider.of<AppState>(context).state.selectedBeverage;
