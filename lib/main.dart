@@ -32,6 +32,7 @@ class _AppState extends State<Main> {
   Future<void> _initializeData() async {
     await fetchBaseData(widget.store);
     await fetchBeverages(widget.store);
+    await Future.delayed(const Duration(seconds: 2));
   }
 
   @override

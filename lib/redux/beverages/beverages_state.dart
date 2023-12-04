@@ -9,6 +9,7 @@ class BeveragesState {
   final List<Beverage> beverages;
   final int pageNumber;
   final bool end;
+  final List<String> selectedBeveragesTitles; // Add this property
 
   const BeveragesState({
     required this.isError,
@@ -16,37 +17,48 @@ class BeveragesState {
     required this.beverages,
     required this.pageNumber,
     required this.end,
+    required this.selectedBeveragesTitles, // Initialize it accordingly
   });
 
   factory BeveragesState.initial(
       {bool isError = false, bool isLoading = false}) {
     return const BeveragesState(
-      isLoading: false,
-      isError: false,
-      pageNumber: 0,
-      end: false,
-      beverages: [],
-    );
+        isLoading: false,
+        isError: false,
+        pageNumber: 0,
+        end: false,
+        beverages: [],
+        selectedBeveragesTitles: []);
   }
 
-  @override
-  String toString() {
-    return 'BeveragesState{isError: $isError, isLoading: $isLoading, beverages: $beverages}';
+  List<String> get availableTitles {
+    return beverages
+        .map((beverage) => beverage.title)
+        .toSet() // Use a Set to get unique titles
+        .toList();
   }
 
-  BeveragesState copyWith({
-    bool? isError,
-    bool? isLoading,
-    int? pageNumber,
-    bool? end,
-    List<Beverage>? beverages,
-  }) {
+  BeveragesState copyWith(
+      {bool? isError,
+      bool? isLoading,
+      int? pageNumber,
+      bool? end,
+      List<Beverage>? beverages,
+      List<String>? selectedBeveragesTitles // Add this property
+      }) {
     return BeveragesState(
       isError: isError ?? this.isError,
       isLoading: isLoading ?? this.isLoading,
       pageNumber: pageNumber ?? this.pageNumber,
       end: end ?? this.end,
       beverages: beverages ?? this.beverages,
+      selectedBeveragesTitles:
+          selectedBeveragesTitles ?? this.selectedBeveragesTitles,
     );
+  }
+
+  @override
+  String toString() {
+    return 'BeveragesState{isError: $isError, isLoading: $isLoading, beverages: $beverages}';
   }
 }

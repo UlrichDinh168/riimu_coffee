@@ -1,3 +1,4 @@
+import 'package:riimu_coffee/models/beverage.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_actions.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
 
@@ -8,8 +9,31 @@ BeveragesState beverageReducer(BeveragesState state, dynamic action) {
         isError: action.data.isError,
         beverages: action.data.beverages,
         pageNumber: action.data.pageNumber,
-        end: action.data.end);
+        end: action.data.end,
+        selectedBeveragesTitles: state.selectedBeveragesTitles);
   }
+  if (action is ToggleTitleSelectionAction) {
+    final String title = action.title;
+    final List<String> updatedSelectedTitles =
+        List.from(state.selectedBeveragesTitles);
+
+    if (updatedSelectedTitles.contains(title)) {
+      updatedSelectedTitles.remove(title);
+    } else {
+      updatedSelectedTitles.add(title);
+    }
+
+    return state.copyWith(selectedBeveragesTitles: updatedSelectedTitles);
+  }
+
+  // if (action is ToggleTitleSelectionAction) {
+  //   // Filter beverages based on selected titles
+  //   List<Beverage> filteredBeverages = state.beverages
+  //       .where((beverage) => action.title.contains(beverage.title))
+  //       .toList();
+
+  //   return state.copyWith(beverages: filteredBeverages);
+  // }
 
   return state;
 }

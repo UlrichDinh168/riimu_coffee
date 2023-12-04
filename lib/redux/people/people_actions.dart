@@ -31,21 +31,13 @@ Future<void> fetchPeopleData(
     if (peopleDataResponse.statusCode == 200) {
       final List<Person> peopleData = parsePerson(peopleDataResponse);
 
-      print('data:$peopleData');
-
       final List<Person> existingPeople =
           List.from(store.state.peopleState.people);
 
-      print(
-        'existingPeople:$existingPeople',
-      );
-
       for (final Person personData in peopleData) {
-        print('personData $personData');
         // Check if the person ID already exists in the store
         bool personExists =
             existingPeople.any((person) => person.id == personData.id);
-        print('personExists:$personExists');
         if (!personExists) {
           // If the person does not exist, add it to the store
           existingPeople.add(personData);
@@ -60,10 +52,6 @@ Future<void> fetchPeopleData(
             people: existingPeople,
           ),
         ),
-      );
-
-      print(
-        'existingPeople:$existingPeople',
       );
     }
   } catch (error) {
