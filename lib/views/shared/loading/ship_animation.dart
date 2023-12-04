@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 // import 'dart:math';
 
@@ -9,16 +11,20 @@ class ShipAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-        tween: Tween<double>(begin: 0, end: 4),
-        duration: Duration(seconds: timeout),
-        // translate receive values from tween and move the image
-        builder: (_, double translate, __) {
-          // final waveOffset = sin(translate * pi + 90) * 12.0;
-          return Transform.translate(
-              // * 100: frames
-              // offset: Offset(translate * 100, 0),
-              offset: Offset(translate * 100, 0),
-              child: Image.asset('assets/images/background/vikingship.png'));
-        });
+      tween: Tween<double>(begin: 0, end: 4),
+      duration: Duration(seconds: timeout),
+      // The 'translate' parameter receives values from the tween and moves the image
+      builder: (_, double translate, __) {
+        // Calculate a wavy offset using the sine function
+        final waveOffset = cos(translate * pi) * 9.0;
+
+        // Move the ship left to right using the 'translate' value
+        // Also, apply the wavy offset to the ship's vertical position
+        return Transform.translate(
+          offset: Offset(translate * 100, waveOffset),
+          child: Image.asset('assets/images/background/vikingship.png'),
+        );
+      },
+    );
   }
 }
