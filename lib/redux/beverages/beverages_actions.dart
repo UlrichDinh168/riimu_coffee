@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 
+import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
@@ -12,13 +13,23 @@ import 'package:riimu_coffee/redux/people/people_actions.dart';
 import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/utils/parse_function.dart';
 
+// class FetchBeveragesAction {}
 @immutable
-class FetchBeveragesAction {}
+class ToggleTitleSelectionAction {
+  final String title;
 
+  const ToggleTitleSelectionAction(this.title);
+}
+
+class ClearAllTitleSelectionsAction {
+  ClearAllTitleSelectionsAction();
+}
+
+@immutable
 class SetBeveragesAction {
   final BeveragesState data;
 
-  SetBeveragesAction({required this.data});
+  const SetBeveragesAction({required this.data});
 }
 
 Future<void> fetchBeverages(Store<AppState> store) async {
@@ -64,12 +75,12 @@ Future<void> fetchBeverages(Store<AppState> store) async {
       store.dispatch(
         SetBeveragesAction(
           data: BeveragesState(
-            isLoading: false,
-            isError: false,
-            beverages: updatedBeverages,
-            pageNumber: nextPageNumber,
-            end: end,
-          ),
+              isLoading: false,
+              isError: false,
+              beverages: updatedBeverages,
+              pageNumber: nextPageNumber,
+              end: end,
+              selectedBeveragesTitles: []),
         ),
       );
     }
