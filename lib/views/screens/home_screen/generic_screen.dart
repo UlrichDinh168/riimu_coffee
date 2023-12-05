@@ -29,8 +29,6 @@ class GenericScreen extends StatefulWidget {
 }
 
 class _GenericScreenState extends State<GenericScreen> {
-  // double previousScrollPosition = 0.0;
-
   final ScrollController _scrollController = ScrollController();
 
   bool isLoadingPage = false;
@@ -66,10 +64,8 @@ class _GenericScreenState extends State<GenericScreen> {
 
   void _fetchMoreData() async {
     final store = StoreProvider.of<AppState>(context);
-    // previousScrollPosition = _scrollController.position.pixels;
 
     await fetchBeverages(store);
-    // _scrollController.jumpTo(previousScrollPosition);
     setState(() {
       // Loading page
       isLoadingPage = false;
@@ -86,114 +82,52 @@ class _GenericScreenState extends State<GenericScreen> {
   }
 
   Widget _buildListView(BeveragesState state) {
-    return StoreConnector<AppState, BeveragesState>(
-      converter: (store) => store.state.beveragesState,
-      builder: (context, beveragesState) {
-        List<String>? selectedTitles = beveragesState.selectedBeveragesTitles;
+    List<String>? selectedTitles = state.selectedBeveragesTitles;
 
-        List<Beverage> filteredBeverages = selectedTitles.isNotEmpty
-            ? beveragesState.beverages
-                .where((beverage) => selectedTitles.contains(beverage.title))
-                .toList()
-            : List.from(beveragesState.beverages);
+    List<Beverage> filteredBeverages = selectedTitles.isNotEmpty == true
+        ? state.beverages
+            .where((beverage) => selectedTitles.contains(beverage.title))
+            .toList()
+        : List.from(state.beverages);
 
-        return ListView.builder(
-          controller: _scrollController,
-          //
-          itemCount: isLoadingPage
-              ? filteredBeverages.length + 2
-              : filteredBeverages.length + 1,
-          itemBuilder: (BuildContext context, int index) {
-            //show HeaderImage at the beginning
-            if (index == 0) {
-              return const Column(
-                children: [
-                  HeaderImage(),
-                  SizedBox(height: 20.0),
-                ],
-              );
-              //Loading Indicator at the end
-            } else if (index == filteredBeverages.length + 1) {
-              return isLoadingPage
-                  ? const Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 10.0), // Adjust spacing as needed
-                      ],
-                    )
-                  : Container();
-              //Display regular BeverageCard items
-            } else {
-              final beverage = filteredBeverages[index - 1];
-
-              return BeverageCard(
-                beverage: beverage,
-                showDetails: (selectedBeverage) {
-                  Store<AppState> store = StoreProvider.of<AppState>(context);
-                  store.dispatch(SelectItemAction(selectedBeverage));
-                  Navigator.pushNamed(context, '/detail');
-                },
-              );
-            }
-          },
-        );
-      },
+    return ListView(
+      controller: _scrollController,
+      shrinkWrap: true,
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      children: [
+        const HeaderImage(),
+        const SizedBox(
+          height: 20,
+        ),
+        const SizedBox(height: 20),
+        ...filteredBeverages.map((beverage) => LayoutBuilder(
+              builder: (context, constraints) {
+                return BeverageCard(
+                  beverage: beverage,
+                  showDetails: (selectedBeverage) {
+                    Store<AppState> store = StoreProvider.of<AppState>(context);
+                    store.dispatch(SelectItemAction(selectedBeverage));
+                    Navigator.pushNamed(context, '/detail');
+                  },
+                );
+              },
+            )),
+        if (isLoadingPage)
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+            ],
+          ),
+      ],
     );
   }
-
-  // Widget _buildListView(BeveragesState state) {
-  //   return StoreConnector<AppState, BeveragesState>(
-  //     converter: (store) => store.state.beveragesState,
-  //     builder: (context, beveragesState) {
-  //       return ListView(
-  //         controller: _scrollController,
-  //         children: [
-  //           const HeaderImage(),
-  //           const SizedBox(height: 10.0), // Adjust the header spacing as needed
-  //           ...List.generate(
-  //             state.isLoading
-  //                 ? state.beverages.length + 1
-  //                 : state.beverages.length,
-  //             (index) {
-  //               if (index == state.beverages.length) {
-  //                 return const Center(
-  //                   child: CircularProgressIndicator(),
-  //                 );
-  //               } else {
-  //                 final beverage = state.beverages[index];
-  //                 return BeverageCard(
-  //                   beverage: beverage,
-  //                   showDetails: (selectedBeverage) {
-  //                     Store<AppState> store =
-  //                         StoreProvider.of<AppState>(context);
-  //                     store.dispatch(SelectItemAction(selectedBeverage));
-  //                     Navigator.pushNamed(context, '/detail');
-  //                   },
-  //                 );
-  //               }
-  //             },
-  //           ),
-  //           if (isLoadingPage)
-  //             const Column(
-  //               crossAxisAlignment: CrossAxisAlignment.center,
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: [
-  //                 CircularProgressIndicator(),
-  //                 SizedBox(height: 10.0), // Adjust the header spacing as needed
-  //               ],
-  //             ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   Widget _buildBody() {
     return Column(
       children: [
-        // const HeaderImage(),
         Expanded(
           child: StoreConnector<AppState, BeveragesState>(
             converter: (store) => store.state.beveragesState,
@@ -202,9 +136,6 @@ class _GenericScreenState extends State<GenericScreen> {
             },
           ),
         ),
-        FooterImage(
-          handleOpenDrawer: onOpenDrawer,
-        ),
       ],
     );
   }
@@ -212,6 +143,10 @@ class _GenericScreenState extends State<GenericScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      bottomNavigationBar: FooterImage(
+        handleOpenDrawer: onOpenDrawer,
+      ),
       body: _buildBody(),
     );
   }
