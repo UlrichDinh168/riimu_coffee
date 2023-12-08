@@ -15,8 +15,6 @@ class SetPeopleAction {
 
 Future<void> fetchPeopleData(
     Store<AppState> store, List<String> peopleIDs) async {
-  // store.dispatch(SetPeopleAction(data: PeopleState.initial(isLoading: true)));
-
   try {
     final peopleDataResponse = await http.post(
       Uri.parse(endpoints['peopleData']!),

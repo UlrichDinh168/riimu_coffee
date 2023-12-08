@@ -48,6 +48,7 @@ dependencies:
   meta: ^1.9.1
   redux_logging: ^0.5.1
   flutter_svg: ^2.0.9
+  flutter_localization: ^0.1.14
   # built_collection: ^5.1.1
   # built_value: ^8.7.0
 
@@ -102,6 +103,9 @@ flutter:
     - assets/images/products/tea_1.png
     - assets/images/products/tea_2.png
     - assets/images/products/tea_3.png
+    #assets
+    - assets/i18n/
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

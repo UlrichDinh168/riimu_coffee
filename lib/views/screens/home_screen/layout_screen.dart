@@ -8,27 +8,19 @@ import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_card.dart';
 import 'package:riimu_coffee/views/screens/home_screen/home_layout/footer_image.dart';
 import 'package:riimu_coffee/views/screens/home_screen/home_layout/header_image.dart';
-import 'package:riimu_coffee/views/shared/filter.dart';
+import 'package:riimu_coffee/views/shared/filter_drawer.dart';
+import 'package:riimu_coffee/views/shared/language_selection.dart';
 
-class GenericScreen extends StatefulWidget {
-  const GenericScreen({
+class LayoutScreen extends StatefulWidget {
+  const LayoutScreen({
     super.key,
-    required this.title,
-    required this.backNavigator,
-    required this.imageUrl,
-    required this.body,
   });
 
-  final Widget body;
-  final String title;
-  final bool backNavigator;
-  final String imageUrl;
-
   @override
-  State<GenericScreen> createState() => _GenericScreenState();
+  State<LayoutScreen> createState() => _LayoutScreenState();
 }
 
-class _GenericScreenState extends State<GenericScreen> {
+class _LayoutScreenState extends State<LayoutScreen> {
   final ScrollController _scrollController = ScrollController();
 
   bool isLoadingPage = false;
@@ -72,11 +64,24 @@ class _GenericScreenState extends State<GenericScreen> {
     });
   }
 
-  void onOpenDrawer() {
+  void onOpenBeverageFilter() {
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
         return const FilterDrawer();
+      },
+    );
+  }
+
+  void onOpenLanguageSelection() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          title: Text('Select Language'),
+          content:
+              LanguageSelectionWidget(), // Your language selection widget goes here
+        );
       },
     );
   }
@@ -90,36 +95,48 @@ class _GenericScreenState extends State<GenericScreen> {
             .toList()
         : List.from(state.beverages);
 
-    return ListView(
-      controller: _scrollController,
-      shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
+    return Stack(
       children: [
-        const HeaderImage(),
-        const SizedBox(
-          height: 20,
+        Column(
+          children: [
+            Expanded(
+              child: ListView(
+                controller: _scrollController,
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                children: [
+                  const HeaderImage(),
+                  const SizedBox(height: 20),
+                  ...filteredBeverages.map(
+                    (beverage) => LayoutBuilder(
+                      builder: (context, constraints) {
+                        return BeverageCard(
+                          beverage: beverage,
+                          showDetails: (selectedBeverage) {
+                            Store<AppState> store =
+                                StoreProvider.of<AppState>(context);
+                            store.dispatch(SelectItemAction(selectedBeverage));
+                            Navigator.pushNamed(context, '/detail');
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 20),
-        ...filteredBeverages.map((beverage) => LayoutBuilder(
-              builder: (context, constraints) {
-                return BeverageCard(
-                  beverage: beverage,
-                  showDetails: (selectedBeverage) {
-                    Store<AppState> store = StoreProvider.of<AppState>(context);
-                    store.dispatch(SelectItemAction(selectedBeverage));
-                    Navigator.pushNamed(context, '/detail');
-                  },
-                );
-              },
-            )),
         if (isLoadingPage)
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(),
-            ],
+          Positioned.fill(
+            child: Container(
+              color: Colors.black
+                  .withOpacity(0.2), // Adjust opacity and color as needed
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           ),
       ],
     );
@@ -145,8 +162,8 @@ class _GenericScreenState extends State<GenericScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: FooterImage(
-        handleOpenDrawer: onOpenDrawer,
-      ),
+          handleOpenBeverageFilter: onOpenBeverageFilter,
+          handleOpenLanguageSelection: onOpenLanguageSelection),
       body: _buildBody(),
     );
   }

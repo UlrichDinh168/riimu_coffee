@@ -13,11 +13,9 @@ import 'package:riimu_coffee/redux/people/people_actions.dart';
 import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/utils/parse_function.dart';
 
-// class FetchBeveragesAction {}
 @immutable
 class ToggleTitleSelectionAction {
   final String title;
-
   const ToggleTitleSelectionAction(this.title);
 }
 
@@ -38,8 +36,6 @@ Future<void> fetchBeverages(Store<AppState> store) async {
   if (state.isLoading || state.end) {
     return;
   }
-
-  // store.dispatch(SetBeveragesAction(data: state.copyWith(isLoading: true)));
 
   try {
     final int nextPageNumber = state.pageNumber + 1;
@@ -68,9 +64,7 @@ Future<void> fetchBeverages(Store<AppState> store) async {
 
       final List<String> personIDs =
           beverages.expand((beverage) => beverage.persons).toSet().toList();
-// final peopleArray =
       await fetchPeopleData(store, personIDs);
-      // print(peopleArray);
 
       store.dispatch(
         SetBeveragesAction(
@@ -80,7 +74,7 @@ Future<void> fetchBeverages(Store<AppState> store) async {
               beverages: updatedBeverages,
               pageNumber: nextPageNumber,
               end: end,
-              selectedBeveragesTitles: []),
+              selectedBeveragesTitles: const []),
         ),
       );
     }

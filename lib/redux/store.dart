@@ -7,20 +7,13 @@ import 'package:riimu_coffee/redux/beverages/beverages_reducer.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
 import 'package:riimu_coffee/redux/baseData/base_data_reducer.dart';
 import 'package:riimu_coffee/redux/baseData/base_data_state.dart';
+import 'package:riimu_coffee/redux/language/language_reducer.dart';
+import 'package:riimu_coffee/redux/language/language_state.dart';
 import 'package:riimu_coffee/redux/people/people_reducer.dart';
 import 'package:riimu_coffee/redux/people/people_state.dart';
 
-// AppState appReducer(AppState state, dynamic action) {
-//   return AppState(
-//       beveragesState: beveragesReducer(state.beveragesState, action),
-//       inventoryState: inventoryReducer(state.inventoryState, action));
-// }
-
-// ... other actions for different data types
-
 class SelectItemAction {
   final Beverage selectedBeverage;
-
   SelectItemAction(this.selectedBeverage);
 }
 
@@ -31,6 +24,7 @@ AppState appReducer(AppState state, dynamic action) {
       beveragesState: beverageReducer(state.beveragesState, action),
       baseDataState: baseDataReducer(state.baseDataState, action),
       peopleState: peopleReducer(state.peopleState, action),
+      languageState: languageReducer(state.languageState, action),
     );
   }
 
@@ -39,6 +33,7 @@ AppState appReducer(AppState state, dynamic action) {
     beveragesState: beverageReducer(state.beveragesState, action),
     baseDataState: baseDataReducer(state.baseDataState, action),
     peopleState: peopleReducer(state.peopleState, action),
+    languageState: languageReducer(state.languageState, action),
   );
 }
 
@@ -49,12 +44,14 @@ class AppState {
   final BaseDataState baseDataState;
   final BeveragesState beveragesState;
   final PeopleState peopleState;
+  final LanguageState languageState;
 
   const AppState({
     required this.selectedBeverage,
     required this.beveragesState,
     required this.baseDataState,
     required this.peopleState,
+    required this.languageState,
   });
 
   factory AppState.initial() {
@@ -78,6 +75,7 @@ class AppState {
       beveragesState: BeveragesState.initial(),
       baseDataState: BaseDataState.initial(),
       peopleState: PeopleState.initial(),
+      languageState: LanguageState.initial(),
     );
   }
 }

@@ -9,7 +9,7 @@ class BeveragesState {
   final List<Beverage> beverages;
   final int pageNumber;
   final bool end;
-  final List<String> selectedBeveragesTitles; // Add this property
+  final List<String> selectedBeveragesTitles;
 
   const BeveragesState({
     required this.isError,
@@ -17,7 +17,7 @@ class BeveragesState {
     required this.beverages,
     required this.pageNumber,
     required this.end,
-    required this.selectedBeveragesTitles, // Initialize it accordingly
+    required this.selectedBeveragesTitles,
   });
 
   factory BeveragesState.initial(
@@ -32,10 +32,7 @@ class BeveragesState {
   }
 
   List<String> get availableTitles {
-    return beverages
-        .map((beverage) => beverage.title)
-        .toSet() // Use a Set to get unique titles
-        .toList();
+    return beverages.map((beverage) => beverage.title).toSet().toList();
   }
 
   BeveragesState copyWith(
@@ -44,8 +41,7 @@ class BeveragesState {
       int? pageNumber,
       bool? end,
       List<Beverage>? beverages,
-      List<String>? selectedBeveragesTitles // Add this property
-      }) {
+      List<String>? selectedBeveragesTitles}) {
     return BeveragesState(
       isError: isError ?? this.isError,
       isLoading: isLoading ?? this.isLoading,
