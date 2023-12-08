@@ -38,6 +38,18 @@ class LoadingAnimation extends StatelessWidget {
               progressColor: Colors.red[700],
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            "Loading \nprototype",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                  fontSize: 30.0, // Adjust the font size as needed
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
         ],
       ),
       Positioned(
