@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FooterImage extends StatelessWidget {
-  const FooterImage({super.key, this.handleOpenDrawer});
-
-  final void Function()? handleOpenDrawer;
+  const FooterImage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +22,6 @@ class FooterImage extends StatelessWidget {
                   'assets/images/background/riimu_logo.png',
                 ),
               ],
-            ),
-            Positioned(
-              top: 0,
-              right: 30,
-              child: IconButton(
-                icon: const Icon(
-                  Icons.filter_list,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  // Handle filter icon tap
-                  handleOpenDrawer?.call();
-                },
-              ),
             ),
           ],
         ),

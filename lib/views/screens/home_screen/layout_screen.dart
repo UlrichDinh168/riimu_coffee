@@ -74,14 +74,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
   }
 
   void onOpenLanguageSelection() {
-    showDialog(
+    showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return const AlertDialog(
-          title: Text('Select Language'),
-          content:
-              LanguageSelectionWidget(), // Your language selection widget goes here
-        );
+        return const LanguageSelectionWidget();
       },
     );
   }
@@ -106,7 +102,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
                 children: [
-                  const HeaderImage(),
+                  HeaderImage(
+                    handleOpenBeverageFilter: onOpenBeverageFilter,
+                    handleOpenLanguageSelection: onOpenLanguageSelection,
+                  ),
                   const SizedBox(height: 20),
                   ...filteredBeverages.map(
                     (beverage) => LayoutBuilder(
@@ -130,14 +129,13 @@ class _LayoutScreenState extends State<LayoutScreen> {
         ),
         if (isLoadingPage)
           Positioned.fill(
-            child: Container(
-              color: Colors.black
-                  .withOpacity(0.2), // Adjust opacity and color as needed
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: Container(
+            color: Colors.black
+                .withOpacity(0.1), // Adjust opacity and color as needed
+            child: const Center(
+              child: CircularProgressIndicator(),
             ),
-          ),
+          ))
       ],
     );
   }
@@ -161,9 +159,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      bottomNavigationBar: FooterImage(
-          handleOpenBeverageFilter: onOpenBeverageFilter,
-          handleOpenLanguageSelection: onOpenLanguageSelection),
+      // bottomNavigationBar: FooterImage(
+      //     handleOpenBeverageFilter: onOpenBeverageFilter,
+      //     handleOpenLanguageSelection: onOpenLanguageSelection),
       body: _buildBody(),
     );
   }

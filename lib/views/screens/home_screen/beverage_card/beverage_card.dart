@@ -33,13 +33,12 @@ class BeverageCard extends StatelessWidget {
         splashColor: const Color.fromARGB(255, 250, 188, 198),
         borderRadius: BorderRadius.circular(10),
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 30.0),
+          padding: const EdgeInsets.only(bottom: 20.0),
           child: Container(
             padding: const EdgeInsets.only(bottom: 10.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: const Color.fromARGB(255, 250, 188, 198),
-                // Colors.red[100],
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.5),
@@ -49,7 +48,7 @@ class BeverageCard extends StatelessWidget {
                   )
                 ]),
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -61,8 +60,6 @@ class BeverageCard extends StatelessWidget {
                   const SizedBox(height: 5),
                   BeverageType(beverageTypes: beverage.labels),
                   const SizedBox(height: 5),
-
-                  // SalespersonInfo(salespersons: beverage.salespersons)
                   beverage.info != ''
                       ? BeverageInfo(info: beverage.info)
                       : const SizedBox(),
