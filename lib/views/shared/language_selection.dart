@@ -57,7 +57,7 @@ class _LanguageSelectionWidgetState extends State<LanguageSelectionWidget> {
                   (Locale locale) {
                     return DropdownMenuItem<String>(
                       value: locale.languageCode,
-                      child: Text(locale.languageCode),
+                      child: Text(locale.languageCode.toUpperCase()),
                     );
                   },
                 ).toList(),

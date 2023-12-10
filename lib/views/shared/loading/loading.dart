@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:riimu_coffee/views/shared/loading/ship_animation.dart';
+import 'package:riimu_coffee/views/shared/translation.dart';
 
 class LoadingAnimation extends StatelessWidget {
   const LoadingAnimation({super.key, required this.timeout});
@@ -42,7 +44,7 @@ class LoadingAnimation extends StatelessWidget {
             height: 20,
           ),
           Text(
-            "Loading \nprototype",
+            AppLocale.loading.getString(context),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
                   fontSize: 30.0, // Adjust the font size as needed

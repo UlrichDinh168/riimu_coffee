@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_actions.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
 import 'package:riimu_coffee/redux/store.dart';
+import 'package:riimu_coffee/views/shared/translation.dart';
 
 class FilterDrawer extends StatelessWidget {
   const FilterDrawer({
@@ -42,7 +44,7 @@ class FilterDrawer extends StatelessWidget {
             children: [
               Center(
                 child: Text(
-                  'Select beverages to display',
+                  AppLocale.filterBeverages.getString(context),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
