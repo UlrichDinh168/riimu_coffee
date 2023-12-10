@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-import 'package:redux_logging/redux_logging.dart';
 import 'package:riimu_coffee/models/beverage.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_reducer.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
@@ -54,6 +53,11 @@ class AppState {
     required this.languageState,
   });
 
+  @override
+  String toString() {
+    return 'AppState(languageCode: $languageState)';
+  }
+
   factory AppState.initial() {
     const defaultBeverage = Beverage(
       id: '',
@@ -81,15 +85,13 @@ class AppState {
 }
 
 Future<Store<AppState>> createStore() async {
-  return Store(
+  final store = Store(
     appReducer,
     initialState: AppState.initial(),
     middleware: [
       thunkMiddleware,
-      // ValidationMiddleware(),
-      // LoggingMiddleware.printer(),
-      // LocalStorageMiddleware(prefs),
-      // NavigationMiddleware()
     ],
   );
+
+  return store;
 }

@@ -7,10 +7,11 @@ import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/views/shared/translation.dart';
 
 class HeaderImage extends StatelessWidget {
-  const HeaderImage(
-      {super.key,
-      this.handleOpenBeverageFilter,
-      this.handleOpenLanguageSelection});
+  const HeaderImage({
+    super.key,
+    this.handleOpenBeverageFilter,
+    this.handleOpenLanguageSelection,
+  });
 
   final void Function()? handleOpenBeverageFilter;
   final void Function()? handleOpenLanguageSelection;
@@ -57,8 +58,6 @@ class HeaderImage extends StatelessWidget {
               child: Center(
                 child: Text(
                   AppLocale.beverages.getString(context),
-// AppLocale.title.getString(context)
-
                   style: GoogleFonts.rubik(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,

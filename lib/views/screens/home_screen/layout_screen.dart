@@ -6,7 +6,6 @@ import 'package:riimu_coffee/redux/beverages/beverages_actions.dart';
 import 'package:riimu_coffee/redux/beverages/beverages_state.dart';
 import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_card.dart';
-import 'package:riimu_coffee/views/screens/home_screen/home_layout/footer_image.dart';
 import 'package:riimu_coffee/views/screens/home_screen/home_layout/header_image.dart';
 import 'package:riimu_coffee/views/shared/filter_drawer.dart';
 import 'package:riimu_coffee/views/shared/language_selection.dart';
@@ -59,7 +58,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
     await fetchBeverages(store);
     setState(() {
-      // Loading page
       isLoadingPage = false;
     });
   }
