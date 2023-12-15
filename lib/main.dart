@@ -13,6 +13,7 @@ import 'package:riimu_coffee/views/screens/detail_screen/detail_screen.dart';
 import 'package:riimu_coffee/views/screens/home_screen/home_screen.dart';
 import 'package:riimu_coffee/views/shared/loading/loading.dart';
 import 'package:riimu_coffee/views/shared/translation.dart';
+import 'package:riimu_coffee/utils/presettings.dart';
 
 void main() async {
   final store = await createStore();
@@ -38,10 +39,13 @@ class Main extends StatefulWidget {
 
 class _AppState extends State<Main> {
   final FlutterLocalization _localization = FlutterLocalization.instance;
+  bool _dataInitialized = false;
 
   Future<void> _initializeData() async {
+    await preSettings(widget.store);
     await fetchBaseData(widget.store);
     await fetchBeverages(widget.store);
+
     await Future.delayed(const Duration(seconds: 1));
   }
 
@@ -66,40 +70,46 @@ class _AppState extends State<Main> {
     );
     _localization.onTranslatedLanguage = _onTranslatedLanguage;
 
+    _initializeData();
+
     super.initState();
   }
 
-  void _onTranslatedLanguage(Locale? locale) {
-    setState(() {});
+  void _onTranslatedLanguage(Locale? locale) async {
+    if (!_dataInitialized) {
+      await _initializeData();
+      setState(() {
+        _dataInitialized = true;
+      });
+    } else {
+      setState(() {});
+    }
   }
+
+  final ColorScheme _colorScheme = ColorScheme.fromSeed(
+    background: const Color.fromARGB(255, 52, 48, 49),
+    seedColor: const Color.fromARGB(255, 84, 240, 53),
+    secondary: const Color.fromARGB(255, 38, 200, 68),
+    onPrimary: const Color.fromARGB(255, 255, 255, 255),
+    onSecondary: const Color.fromARGB(255, 45, 87, 53),
+    onBackground: const Color.fromARGB(255, 170, 110, 125),
+  );
 
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: widget.store,
       child: MaterialApp(
+        darkTheme: ThemeData.dark().copyWith(colorScheme: _colorScheme),
+        themeMode: ThemeMode.system,
         theme: ThemeData(
           colorScheme: DefaultTheme().colorScheme,
           useMaterial3: true,
           fontFamily: _localization.fontFamily,
         ),
-        home: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 253, 233, 236),
-          body: FutureBuilder<void>(
-            future: _initializeData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const LoadingAnimation(
-                  timeout: 10,
-                );
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return const Scaffold(body: HomeScreen());
-              }
-            },
-          ),
-        ),
+
+        home: _dataInitialized ? const HomeScreen() : const LoadingAnimation(),
+        // initialRoute: '/loading',
         routes: <String, WidgetBuilder>{
           "/home": (BuildContext context) {
             return const HomeScreen();
@@ -109,6 +119,9 @@ class _AppState extends State<Main> {
                 StoreProvider.of<AppState>(context).state.selectedBeverage;
             return DetailScreen(selectedBeverage: selectedBeverage);
           },
+          "/loading": (BuildContext context) {
+            return const LoadingAnimation();
+          }
         },
         supportedLocales: _localization.supportedLocales,
         localizationsDelegates: _localization.localizationsDelegates,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:riimu_coffee/redux/language/language_actions.dart';
 import 'package:riimu_coffee/redux/language/language_state.dart';
 import 'package:riimu_coffee/redux/store.dart';
@@ -17,10 +18,24 @@ class _LanguageSelectionWidgetState extends State<LanguageSelectionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final FlutterLocalization localization = FlutterLocalization.instance;
     return StoreConnector<AppState, LanguageState>(
       converter: (store) => store.state.languageState,
       builder: (context, languageState) {
+        final FlutterLocalization localization = FlutterLocalization.instance;
+        final store = StoreProvider.of<AppState>(context);
+
+        List<Locale> sortedLocales = List.from(localization.supportedLocales);
+
+        List<DropdownMenuItem<String>> dropdownItems =
+            sortedLocales.map<DropdownMenuItem<String>>(
+          (Locale locale) {
+            return DropdownMenuItem<String>(
+              value: locale.languageCode,
+              child: Text(locale.languageCode.toUpperCase()),
+            );
+          },
+        ).toList();
+
         return Container(
           height: 200,
           width: double.infinity,
@@ -40,28 +55,15 @@ class _LanguageSelectionWidgetState extends State<LanguageSelectionWidget> {
               ),
               const SizedBox(height: 20),
               DropdownButton<String>(
-                key: _dropdownKey,
-                value: languageState.languageCode,
-                onChanged: (String? newLanguageCode) {
-                  if (newLanguageCode != null) {
-                    StoreProvider.of<AppState>(context)
-                        .dispatch(ChangeLanguageAction(newLanguageCode));
-                    localization.translate(newLanguageCode);
-
-                    // Close the dropdown programmatically
-                    Navigator.of(_dropdownKey.currentContext!).pop();
-                  }
-                },
-                items:
-                    localization.supportedLocales.map<DropdownMenuItem<String>>(
-                  (Locale locale) {
-                    return DropdownMenuItem<String>(
-                      value: locale.languageCode,
-                      child: Text(locale.languageCode.toUpperCase()),
-                    );
+                  key: _dropdownKey,
+                  value: languageState.languageCode,
+                  onChanged: (String? newLanguageCode) {
+                    if (newLanguageCode != null) {
+                      // Close the language dropdown
+                      Navigator.of(_dropdownKey.currentContext!).pop();
+                    }
                   },
-                ).toList(),
-              )
+                  items: dropdownItems)
             ],
           ),
         );
