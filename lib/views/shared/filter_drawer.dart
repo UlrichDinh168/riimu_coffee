@@ -46,7 +46,7 @@ class FilterDrawer extends StatelessWidget {
                 child: Text(
                   AppLocale.filterBeverages.getString(context),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
               ),
@@ -56,7 +56,12 @@ class FilterDrawer extends StatelessWidget {
                   child: Column(
                     children: titles.map((title) {
                       return CheckboxListTile(
-                        title: Text(title),
+                        title: Text(
+                          title,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
                         value: beveragesState.selectedBeveragesTitles
                             .contains(title),
                         onChanged: (bool? value) {

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:riimu_coffee/models/beverage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riimu_coffee/redux/people/people_state.dart';
-import 'package:riimu_coffee/redux/store.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_brewing_time.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_cleaned_date.dart';
 import 'package:riimu_coffee/views/screens/home_screen/beverage_card/beverage_info.dart';
@@ -30,7 +27,9 @@ class BeverageCard extends StatelessWidget {
         onTap: () {
           showDetails?.call(beverage);
         },
-        splashColor: const Color.fromARGB(255, 250, 188, 198),
+        // backgroundColor: Theme.of(context).colorScheme.background,
+
+        splashColor: Theme.of(context).colorScheme.onSecondary,
         borderRadius: BorderRadius.circular(10),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20.0),
@@ -38,7 +37,8 @@ class BeverageCard extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 10.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 250, 188, 198),
+                // color: const Color.fromARGB(255, 250, 188, 198),
+                color: Theme.of(context).colorScheme.onBackground,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.5),

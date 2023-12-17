@@ -59,6 +59,7 @@ class _LanguageSelectionWidgetState extends State<LanguageSelectionWidget> {
                   value: languageState.languageCode,
                   onChanged: (String? newLanguageCode) {
                     if (newLanguageCode != null) {
+                      changeLanguage(store, newLanguageCode);
                       // Close the language dropdown
                       Navigator.of(_dropdownKey.currentContext!).pop();
                     }

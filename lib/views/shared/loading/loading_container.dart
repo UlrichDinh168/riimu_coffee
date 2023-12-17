@@ -47,7 +47,7 @@ class LoadingContainer extends StatelessWidget {
               AppLocale.loading.getString(context),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                    fontSize: 30.0, // Adjust the font size as needed
+                    fontSize: 30.0,
                     color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.w600,
                   ),

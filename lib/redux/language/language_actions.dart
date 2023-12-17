@@ -13,7 +13,6 @@ class ChangeLanguageAction {
 // change language
 Future changeLanguage(Store<AppState> store, dynamic languageCode) async {
   final FlutterLocalization localization = FlutterLocalization.instance;
-
   store.dispatch(ChangeLanguageAction(languageCode: languageCode));
   localization.translate(languageCode);
 
