@@ -103,6 +103,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
                   HeaderImage(
                     handleOpenBeverageFilter: onOpenBeverageFilter,
                     handleOpenLanguageSelection: onOpenLanguageSelection,
+                    // setOrChangeTheme: onOpenLanguageSelection,
                   ),
                   const SizedBox(height: 20),
                   ...filteredBeverages.map(

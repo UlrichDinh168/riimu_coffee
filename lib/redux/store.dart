@@ -10,6 +10,8 @@ import 'package:riimu_coffee/redux/language/language_reducer.dart';
 import 'package:riimu_coffee/redux/language/language_state.dart';
 import 'package:riimu_coffee/redux/people/people_reducer.dart';
 import 'package:riimu_coffee/redux/people/people_state.dart';
+import 'package:riimu_coffee/redux/theme/theme_reducer.dart';
+import 'package:riimu_coffee/redux/theme/theme_state.dart';
 
 class SelectItemAction {
   final Beverage selectedBeverage;
@@ -19,12 +21,12 @@ class SelectItemAction {
 AppState appReducer(AppState state, dynamic action) {
   if (action is SelectItemAction) {
     return AppState(
-      selectedBeverage: action.selectedBeverage,
-      beveragesState: beverageReducer(state.beveragesState, action),
-      baseDataState: baseDataReducer(state.baseDataState, action),
-      peopleState: peopleReducer(state.peopleState, action),
-      languageState: languageReducer(state.languageState, action),
-    );
+        selectedBeverage: action.selectedBeverage,
+        beveragesState: beverageReducer(state.beveragesState, action),
+        baseDataState: baseDataReducer(state.baseDataState, action),
+        peopleState: peopleReducer(state.peopleState, action),
+        languageState: languageReducer(state.languageState, action),
+        themeState: themeReducer(state.themeState, action));
   }
 
   return AppState(
@@ -33,6 +35,7 @@ AppState appReducer(AppState state, dynamic action) {
     baseDataState: baseDataReducer(state.baseDataState, action),
     peopleState: peopleReducer(state.peopleState, action),
     languageState: languageReducer(state.languageState, action),
+    themeState: themeReducer(state.themeState, action),
   );
 }
 
@@ -44,6 +47,7 @@ class AppState {
   final BeveragesState beveragesState;
   final PeopleState peopleState;
   final LanguageState languageState;
+  final ThemeState themeState;
 
   const AppState({
     required this.selectedBeverage,
@@ -51,6 +55,7 @@ class AppState {
     required this.baseDataState,
     required this.peopleState,
     required this.languageState,
+    required this.themeState,
   });
 
   @override
@@ -80,6 +85,7 @@ class AppState {
       baseDataState: BaseDataState.initial(),
       peopleState: PeopleState.initial(),
       languageState: LanguageState.initial(),
+      themeState: ThemeState.initial(),
     );
   }
 }

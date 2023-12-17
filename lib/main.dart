@@ -7,6 +7,7 @@ import 'package:riimu_coffee/redux/beverages/beverages_actions.dart';
 import 'package:riimu_coffee/redux/baseData/base_data_actions.dart';
 
 import 'package:riimu_coffee/redux/store.dart';
+import 'package:riimu_coffee/redux/theme/theme_state.dart';
 import 'package:riimu_coffee/theme/default_theme.dart';
 import 'package:riimu_coffee/views/screens/detail_screen/detail_screen.dart';
 
@@ -38,11 +39,15 @@ class Main extends StatefulWidget {
 }
 
 class _AppState extends State<Main> {
+  // String loadingText = ''; // Add this line
+
   final FlutterLocalization _localization = FlutterLocalization.instance;
   bool _dataInitialized = false;
 
   Future<void> _initializeData() async {
+    print('INIT');
     await preSettings(widget.store);
+    setState(() {});
     await fetchBaseData(widget.store);
     await fetchBeverages(widget.store);
 
@@ -70,8 +75,6 @@ class _AppState extends State<Main> {
     );
     _localization.onTranslatedLanguage = _onTranslatedLanguage;
 
-    _initializeData();
-
     super.initState();
   }
 
@@ -98,34 +101,41 @@ class _AppState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
-      store: widget.store,
-      child: MaterialApp(
-        darkTheme: ThemeData.dark().copyWith(colorScheme: _colorScheme),
-        themeMode: ThemeMode.system,
-        theme: ThemeData(
-          colorScheme: DefaultTheme().colorScheme,
-          useMaterial3: true,
-          fontFamily: _localization.fontFamily,
-        ),
+        store: widget.store,
+        child: StoreConnector<AppState, ThemeState>(
+          converter: (store) => store.state.themeState,
+          builder: (context, themeState) {
+            return MaterialApp(
+              darkTheme: ThemeData.dark().copyWith(colorScheme: _colorScheme),
+              themeMode: themeState.themeMode == 'dark'
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+              theme: ThemeData(
+                colorScheme: DefaultTheme().colorScheme,
+                useMaterial3: true,
+                fontFamily: _localization.fontFamily,
+              ),
 
-        home: _dataInitialized ? const HomeScreen() : const LoadingAnimation(),
-        // initialRoute: '/loading',
-        routes: <String, WidgetBuilder>{
-          "/home": (BuildContext context) {
-            return const HomeScreen();
+              home: _dataInitialized ? const HomeScreen() : LoadingAnimation(),
+              // initialRoute: '/loading',
+              routes: <String, WidgetBuilder>{
+                "/home": (BuildContext context) {
+                  return const HomeScreen();
+                },
+                "/detail": (BuildContext context) {
+                  final selectedBeverage = StoreProvider.of<AppState>(context)
+                      .state
+                      .selectedBeverage;
+                  return DetailScreen(selectedBeverage: selectedBeverage);
+                },
+                "/loading": (BuildContext context) {
+                  return LoadingAnimation();
+                }
+              },
+              supportedLocales: _localization.supportedLocales,
+              localizationsDelegates: _localization.localizationsDelegates,
+            );
           },
-          "/detail": (BuildContext context) {
-            final selectedBeverage =
-                StoreProvider.of<AppState>(context).state.selectedBeverage;
-            return DetailScreen(selectedBeverage: selectedBeverage);
-          },
-          "/loading": (BuildContext context) {
-            return const LoadingAnimation();
-          }
-        },
-        supportedLocales: _localization.supportedLocales,
-        localizationsDelegates: _localization.localizationsDelegates,
-      ),
-    );
+        ));
   }
 }

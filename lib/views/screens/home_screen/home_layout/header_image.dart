@@ -4,6 +4,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:riimu_coffee/redux/language/language_state.dart';
 import 'package:riimu_coffee/redux/store.dart';
+import 'package:riimu_coffee/redux/theme/theme_actions.dart';
+import 'package:riimu_coffee/redux/theme/theme_state.dart';
 import 'package:riimu_coffee/views/shared/translation.dart';
 
 class HeaderImage extends StatelessWidget {
@@ -18,6 +20,12 @@ class HeaderImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+
+    void toggleThemeChange(String themeMode) {
+      setOrChangeTheme(store, themeMode);
+    }
+
     return StoreConnector<AppState, LanguageState>(
       converter: (store) => store.state.languageState,
       builder: (context, languageState) {
@@ -102,6 +110,38 @@ class HeaderImage extends StatelessWidget {
                 ],
               ),
             ),
+            StoreConnector<AppState, ThemeState>(
+              converter: (store) => store.state.themeState,
+              builder: (context, themeState) {
+                return Positioned(
+                  top: 50,
+                  left: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: themeState.themeMode == 'light'
+                            ? const Icon(
+                                Icons.light_mode_outlined,
+                                color: Colors.white,
+                              )
+                            : const Icon(
+                                Icons.dark_mode_outlined,
+                                color: Colors.white,
+                              ),
+                        onPressed: () {
+                          // Toggle between 'light' and 'dark' modes
+                          String newThemeMode = themeState.themeMode == 'light'
+                              ? 'dark'
+                              : 'light';
+                          toggleThemeChange(newThemeMode);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            )
           ],
         );
       },
