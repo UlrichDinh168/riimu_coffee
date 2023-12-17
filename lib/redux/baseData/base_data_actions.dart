@@ -63,7 +63,6 @@ Future<void> fetchBaseData(Store<AppState> store) async {
     }
   } catch (error) {
     print('Error fetching base data: $error');
-    // Optionally, dispatch an action for error handling if needed
     store.dispatch(
         SetBaseDataAction(data: BaseDataState.initial(isError: true)));
   }

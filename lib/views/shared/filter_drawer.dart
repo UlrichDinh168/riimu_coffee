@@ -79,8 +79,7 @@ class FilterDrawer extends StatelessWidget {
                   onPressed: clearAllSelections,
                   child: const Text(
                     'Clear All',
-                    style:
-                        TextStyle(color: Colors.red), // Change color as needed
+                    style: TextStyle(color: Colors.red),
                   ),
                 ),
               ),

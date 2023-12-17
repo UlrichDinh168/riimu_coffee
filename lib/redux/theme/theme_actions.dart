@@ -11,7 +11,6 @@ class ChangeThemeModeAction {
 
 // change language
 Future setOrChangeTheme(Store<AppState> store, dynamic themeMode) async {
-  print('themeMode $themeMode');
   store.dispatch(ChangeThemeModeAction(themeMode: themeMode));
 
   setTheme(themeMode);

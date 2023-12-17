@@ -17,7 +17,6 @@ Future preSettings(Store<AppState> store) async {
 
   // theme
   final savedThemeMode = await getSavedTheme();
-  print('savedThemeMode $savedThemeMode');
 
   if (savedThemeMode == 'null') {
     final deviceThemeMode = isDarkMode ? 'dark' : 'light';

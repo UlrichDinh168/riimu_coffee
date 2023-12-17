@@ -45,13 +45,12 @@ class _AppState extends State<Main> {
   bool _dataInitialized = false;
 
   Future<void> _initializeData() async {
-    print('INIT');
     await preSettings(widget.store);
-    setState(() {});
     await fetchBaseData(widget.store);
     await fetchBeverages(widget.store);
 
     await Future.delayed(const Duration(seconds: 1));
+    setState(() {});
   }
 
   @override
@@ -89,53 +88,45 @@ class _AppState extends State<Main> {
     }
   }
 
-  final ColorScheme _colorScheme = ColorScheme.fromSeed(
-    background: const Color.fromARGB(255, 52, 48, 49),
-    seedColor: const Color.fromARGB(255, 84, 240, 53),
-    secondary: const Color.fromARGB(255, 38, 200, 68),
-    onPrimary: const Color.fromARGB(255, 255, 255, 255),
-    onSecondary: const Color.fromARGB(255, 45, 87, 53),
-    onBackground: const Color.fromARGB(255, 170, 110, 125),
-  );
-
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
-        store: widget.store,
-        child: StoreConnector<AppState, ThemeState>(
-          converter: (store) => store.state.themeState,
-          builder: (context, themeState) {
-            return MaterialApp(
-              darkTheme: ThemeData.dark().copyWith(colorScheme: _colorScheme),
-              themeMode: themeState.themeMode == 'dark'
-                  ? ThemeMode.dark
-                  : ThemeMode.light,
-              theme: ThemeData(
-                colorScheme: DefaultTheme().colorScheme,
-                useMaterial3: true,
-                fontFamily: _localization.fontFamily,
-              ),
-
-              home: _dataInitialized ? const HomeScreen() : LoadingAnimation(),
-              // initialRoute: '/loading',
-              routes: <String, WidgetBuilder>{
-                "/home": (BuildContext context) {
-                  return const HomeScreen();
-                },
-                "/detail": (BuildContext context) {
-                  final selectedBeverage = StoreProvider.of<AppState>(context)
-                      .state
-                      .selectedBeverage;
-                  return DetailScreen(selectedBeverage: selectedBeverage);
-                },
-                "/loading": (BuildContext context) {
-                  return LoadingAnimation();
-                }
+      store: widget.store,
+      child: StoreConnector<AppState, ThemeState>(
+        converter: (store) => store.state.themeState,
+        builder: (context, themeState) {
+          return MaterialApp(
+            darkTheme:
+                ThemeData.dark().copyWith(colorScheme: DarkTheme().colorScheme),
+            themeMode: themeState.themeMode == 'dark'
+                ? ThemeMode.dark
+                : ThemeMode.light,
+            theme: ThemeData(
+              colorScheme: DefaultTheme().colorScheme,
+              useMaterial3: true,
+              fontFamily: _localization.fontFamily,
+            ),
+            home: _dataInitialized
+                ? const HomeScreen()
+                : const LoadingAnimation(),
+            routes: <String, WidgetBuilder>{
+              "/home": (BuildContext context) {
+                return const HomeScreen();
               },
-              supportedLocales: _localization.supportedLocales,
-              localizationsDelegates: _localization.localizationsDelegates,
-            );
-          },
-        ));
+              "/detail": (BuildContext context) {
+                final selectedBeverage =
+                    StoreProvider.of<AppState>(context).state.selectedBeverage;
+                return DetailScreen(selectedBeverage: selectedBeverage);
+              },
+              "/loading": (BuildContext context) {
+                return const LoadingAnimation();
+              }
+            },
+            supportedLocales: _localization.supportedLocales,
+            localizationsDelegates: _localization.localizationsDelegates,
+          );
+        },
+      ),
+    );
   }
 }

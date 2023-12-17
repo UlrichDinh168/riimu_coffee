@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
 import 'package:riimu_coffee/redux/language/language_actions.dart';
 import 'package:riimu_coffee/redux/language/language_state.dart';
 import 'package:riimu_coffee/redux/store.dart';
