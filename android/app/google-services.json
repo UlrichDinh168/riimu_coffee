@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "556126851738",
+    "project_id": "riimu-coffee-ap",
+    "storage_bucket": "riimu-coffee-ap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556126851738:android:e1e1ada1c076c2ee708523",
+        "android_client_info": {
+          "package_name": "com.example.riimu_coffee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKBeYfDFwLRwSnvk42BTqtm9EzL9JPcKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
